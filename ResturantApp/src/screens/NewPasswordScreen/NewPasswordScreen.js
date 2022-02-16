@@ -6,8 +6,8 @@ const NewPasswordScreen = () => {
   const [code, setCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const onSendPressed = () => {
-    console.warn('sending email');
+  const onSubmitPressed = () => {
+    console.warn('reset password');
   };
 
   const onSignInPress = () => {
@@ -28,7 +28,7 @@ const NewPasswordScreen = () => {
           setValue={setNewPassword}
           placeholder="Enter New Password"
         />
-        <CustomButton text="Send" onPress={onSendPressed} />
+        <CustomButton text="Submit" onPress={onSubmitPressed} />
 
         <CustomButton
           text="Back to Sign in"
