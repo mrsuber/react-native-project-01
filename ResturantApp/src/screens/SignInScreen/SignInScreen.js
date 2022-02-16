@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Logo from '../../../assets/images/suber_logo1.png'
-import {CustomInput, CustomButton} from '../../components'
+import {CustomInput, CustomButton, SocialSignInButton} from '../../components'
 
 const SignInScreen = () => {
   const {height} = useWindowDimensions()
@@ -23,13 +23,6 @@ const SignInScreen = () => {
     console.warn('Forgot password');
   }
 
-  const onSignInFacebook = () => {
-    console.warn('sign in with facebook');
-  }
-
-  const onSignInGoogle = () => {
-    console.warn('Sign in with google');
-  }
 
 
   const onSignUpPress = () => {
@@ -67,18 +60,7 @@ const SignInScreen = () => {
           type="TERTIARY"
         />
 
-        <CustomButton
-          text="Sign In with Facebook"
-          onPress={onSignInFacebook}
-          bgColor="#e7eaf4"
-          fgColor="#4765a9"
-        />
-        <CustomButton
-          text="Sign In with Google"
-          onPress={onSignInGoogle}
-          bgColor="#fae9ea"
-          fgColor="#004044"
-        />
+        <SocialSignInButton />
 
         <CustomButton
           text="Don't have an account? Create one"
