@@ -5,7 +5,7 @@ import {SignInScreen} from './src/screens'
 
 const App = () => {
   return (
-    <SafeAreaView styles={styles.root}>
+    <SafeAreaView style={styles.root}>
       <SignInScreen/>
     </SafeAreaView>
   );
@@ -14,6 +14,7 @@ const App = () => {
 const styles = StyleSheet.create({
   root:{
     flex:1,
+    backgroundColor:'#F9FBFC',
   }
 });
 
