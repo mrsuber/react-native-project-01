@@ -1,16 +1,21 @@
 import React, {useState} from 'react'
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components'
+import {useNavigation} from '@react-navigation/native'
+
 
 const ConfirmEmailScreen = () => {
+
+  const navigation = useNavigation();
+
   const [username, setUsername] = useState('');
 
   const onSendPressed = () => {
-    console.warn('sending email');
+    navigation.navigate('NewPassword');
   };
 
   const onSignInPress = () => {
-    console.warn('Sign in');
+    navigation.navigate('SignIn');
   }
 
 

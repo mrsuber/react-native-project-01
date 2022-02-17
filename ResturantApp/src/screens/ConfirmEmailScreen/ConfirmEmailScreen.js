@@ -1,16 +1,19 @@
 import React, {useState} from 'react'
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components'
+import {useNavigation} from '@react-navigation/native'
 
 const FogotPasswordScreen = () => {
+  const navigation = useNavigation();
+
   const [code, setCode] = useState('');
 
   const onConfirmPressed = () => {
-    console.warn('verify code');
+    navigation.navigate('Home');
   };
 
   const onSignInPress = () => {
-    console.warn('Sign in');
+    navigation.navigate('SignIn');
   }
 
   const onResendCodePress = () => {
