@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
 import {useNavigation} from '@react-navigation/native'
-
+import ImagePicker from 'react-native-image-crop-picker'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -79,14 +79,84 @@ const DetailInputScreen = ({addInfo}) => {
       Alert.alert('Error', 'please enter your town')
     } else if (!residence) {
       Alert.alert('Error', 'please enter your recident')
-    } else if (!idCardImage) {
-      Alert.alert('Error', 'please use camara to take photo of Id Card')
-    } else if (!passportImage) {
-      Alert.alert('Error', 'please upload a passport photo')
     } else {
       addInfo(obj);
     }
   };
+
+
+
+  const takePhotoFromCamera = () =>{
+    ImagePicker.openCamera({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      console.log(image)
+    })
+  }
+
+  const choosePhotoFromLibrary =() => {
+    ImagePicker.openPicker({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      console.log(image)
+    })
+  }
+
+  const uploadPassPort = () => {
+    Alert.alert(
+      'Upload Photo',
+      'Choose Method of Upload',
+      [
+        {
+          text: 'Galary',
+          onPress: () => choosePhotoFromLibrary(),
+          style: 'cancel',
+        },
+      {
+        text: 'Camera',
+          onPress: () => takePhotoFromCamera(),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () =>
+          Alert.alert(
+            'This alert was dismissed by tapping outside of the alert dialog.',
+          ),
+      },
+  );
+  };
+
+  const uploadIdPhoto = () => {
+    Alert.alert(
+      'Upload Photo',
+      'Choose Method of Upload',
+      [
+        {
+          text: 'Galary',
+          onPress: () =>choosePhotoFromLibrary(),
+          style: 'cancel',
+        },
+      {
+        text: 'Camera',
+          onPress: () => takePhotoFromCamera(),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () =>
+          Alert.alert(
+            'This alert was dismissed by tapping outside of the alert dialog.',
+          ),
+      },
+  );
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -146,13 +216,18 @@ const DetailInputScreen = ({addInfo}) => {
           placeholder="image"
 
         />
-        <CustomInput
-          value={passportImage}
-          setValue={setPassportImage}
-          placeholder="image"
 
-        />
+        <TouchableOpacity style={styles.btnCard} onPress={uploadIdPhoto}>
+          <Text style={styles.btnCardText}>
+            <Icon name="camera" size={20} color="#ff7800" />{'    '} Upload Id Card Photo
+          </Text>
+        </TouchableOpacity>
 
+        <TouchableOpacity style={styles.btnCard} onPress={uploadPassPort}>
+          <Text style={styles.btnCardText}>
+            <Icon name="camera" size={20} color="#ff7800" />{'    '} Upload Passport Photo
+          </Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.btn} onPress={onInfoSubmitPressed}>
           <Text style={styles.btnText}>
@@ -195,6 +270,20 @@ const styles = StyleSheet.create({
     padding:9,
     margin:5,
     borderRadius:10,
+
+  },
+  btnCard:{
+    backgroundColor:'#e3e3e396',
+    width:'100%',
+    borderColor:'#e8e8e8',
+    padding:9,
+    margin:5,
+    borderRadius:5,
+
+  },
+  btnCardText:{
+    color:'#fdb075',
+    fontSize:20,
 
   },
   btnText:{
