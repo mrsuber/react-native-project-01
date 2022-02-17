@@ -8,25 +8,29 @@ import {
   ScrollView,
 } from 'react-native';
 import Logo from '../../../assets/images/suber_logo1.png'
-import {CustomInput, CustomButton, SocialSignInButton} from '../../components'
+import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
+import {useNavigation} from '@react-navigation/native'
 
 const SignInScreen = () => {
-  const {height} = useWindowDimensions()
-  const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('')
+  const {height} = useWindowDimensions();
+  const navigation = useNavigation();
+
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
 
   const onSignInPressed = () => {
-    console.warn('Sign In');
+    //validate user
+    navigation.navigate('Home')
   }
 
   const onForgotPasswordPressed = () => {
-    console.warn('Forgot password');
+    navigation.navigate('ForgotPassword');
   }
 
 
 
   const onSignUpPress = () => {
-    console.warn('sign up');
+    navigation.navigate('SignUp');
   }
 
 
