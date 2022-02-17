@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
 import {useNavigation} from '@react-navigation/native'
 
@@ -39,7 +46,7 @@ const DetailInputScreen = ({addInfo}) => {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-  const obj ={
+  const obj = {
     id:guid(),
     FirstName: firstName,
     LastName: lastName,
@@ -53,10 +60,28 @@ const DetailInputScreen = ({addInfo}) => {
   };
 
   const onInfoSubmitPressed = () => {
-    addInfo(obj);
-    navigation.navigate('Home');
-  }
-
+    if (!firstName) {
+      Alert.alert('Error', 'please enter first name')
+    } else if (!lastName) {
+      Alert.alert('Error', 'please enter last name')
+    } else if (!dateOfBirth) {
+      Alert.alert('Error', 'please enter date of birth')
+    } else if (!placeOfBirth) {
+      Alert.alert('Error', 'please enter place of birth')
+    } else if (!motherName) {
+      Alert.alert('Error', 'please enter Mother Name')
+    } else if (!phoneNumber) {
+      Alert.alert('Error', 'please enter phone number')
+    } else if (!idCardNumber) {
+      Alert.alert('Error', 'please enter Id card number')
+    } else if (!town) {
+      Alert.alert('Error', 'please enter your town')
+    } else if (!residence) {
+      Alert.alert('Error', 'please enter your recident')
+    } else {
+      addInfo(obj);
+    }
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
