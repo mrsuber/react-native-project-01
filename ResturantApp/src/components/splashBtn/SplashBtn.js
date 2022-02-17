@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, Pressable} from 'react-native'
 
 
-const CustomButton = ({onPress, text, type = 'PRIMARY', bgColor, fgColor}) => {
+const SplashBtn = ({onPress, text, type = 'PRIMARY', bgColor, fgColor}) => {
   return (
     <Pressable
       onPress={onPress}
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   container_PRIMARY:{
-    backgroundColor:'#130f40bd',
+    backgroundColor:'#3b71f3',
   },
 
   container_TERTIARY: {
@@ -49,11 +49,15 @@ const styles = StyleSheet.create({
   },
 
   text_TERTIARY: {
-    color:'gray',
+    color:'white',
+    backgroundColor:'#130f40bd',
+    padding:15,
+    borderRadius:15,
+
   },
   text_SECONDARY: {
     color:'#3871f3',
   },
 });
 
-export default CustomButton;
+export default SplashBtn;
