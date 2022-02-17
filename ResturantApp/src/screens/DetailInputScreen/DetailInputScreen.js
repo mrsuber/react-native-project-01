@@ -18,7 +18,6 @@ Icon.loadFont();
 
 const DetailInputScreen = ({addInfo}) => {
   const navigation = useNavigation();
-
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('')
   const [dateOfBirth, setDateOfBirth] = useState('')
@@ -57,6 +56,8 @@ const DetailInputScreen = ({addInfo}) => {
     IdCardNumber:idCardNumber,
     Town:town,
     Residence:residence,
+    IdCardImage:idCardImage,
+    PhotoImage:passportImage,
   };
 
   const onInfoSubmitPressed = () => {
@@ -78,6 +79,10 @@ const DetailInputScreen = ({addInfo}) => {
       Alert.alert('Error', 'please enter your town')
     } else if (!residence) {
       Alert.alert('Error', 'please enter your recident')
+    } else if (!idCardImage) {
+      Alert.alert('Error', 'please use camara to take photo of Id Card')
+    } else if (!passportImage) {
+      Alert.alert('Error', 'please upload a passport photo')
     } else {
       addInfo(obj);
     }
@@ -177,7 +182,7 @@ const styles = StyleSheet.create({
     margin:10
   },
   link:{
-    color:'#fdb075'
+    color:'#fdb075',
   },
   input:{
     height:60,

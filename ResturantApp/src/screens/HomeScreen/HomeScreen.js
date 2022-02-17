@@ -1,5 +1,12 @@
 import React,{useState} from 'react';
-import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import {Header,ListItem, AddInfo} from '../../components';
 import {DetailInputScreen} from '../../screens'
 import img from '../../../assets/images/me.png'
@@ -56,7 +63,7 @@ const data = [
 
 const HomeScreen = () => {
   const [infos, setInfos] = useState(data);
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const deleteItem = id => {
     setInfos(prevInfo => {
@@ -65,7 +72,7 @@ const HomeScreen = () => {
   }
 
   const detailsInputScreen = () => {
-    navigation.navigate('detailInput');
+    console.warn('pop up with full detail');
   };
 
   const addInfo = info => {
@@ -82,20 +89,55 @@ const HomeScreen = () => {
           IdCardNumber:info.IdCardNumber,
           Town:info.Town,
           Residence:info.Residence,
-          IdCardImage:`${img}`,
-          PhotoImage:`${img}`,
+          IdCardImage:info.IdCardImage,
+          PhotoImage:info.PhotoImage,
         },
         ...prevInfo
       ]
     })
   }
+
+  const [media, setMedia] = useState([])
+
+  const handleChangeMedia = (e) =>{
+
+      const files = [...e.target.files]
+      let err = ""
+      let newMedia = []
+
+      files.forEach(file =>{
+        if(!file) return err="File does not exist."
+        if(file.size > 1024 * 1024 * 5 ){
+          return err = "The image/video largest is 5mb."
+        }
+
+        return newMedia.push(file)
+
+      })
+
+      if(err)dispatch({ type:GLOBALTYPES.ALERT,payload:{error:err} })
+      setMedia([...media, ...newMedia])
+  }
+
+  const handleDeleteMedia = (index) =>{
+    const newArr = [...media]
+    newArr.splice(index,1)
+    setMedia(newArr)
+  }
+
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
         <Header title="User Info" />
         <DetailInputScreen addInfo={addInfo}/>
         {infos.map((info, index) => (
-          <ListItem info={info} key={index} deleteItem={deleteItem}/>
+          <ListItem
+            info={info}
+            key={index}
+            deleteItem={deleteItem}
+            detailsInputScreen={detailsInputScreen}
+          />
       ))}
     </View>
     </ScrollView>
