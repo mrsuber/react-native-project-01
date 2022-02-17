@@ -5,4 +5,5 @@ export {default as ConfirmEmailScreen} from './ConfirmEmailScreen/ConfirmEmailSc
 export {default as FogotPasswordScreen} from './FogotPasswordScreen/FogotPasswordScreen';
 export {default as NewPasswordScreen} from './NewPasswordScreen/NewPasswordScreen';
 export {default as HomeScreen} from './HomeScreen/HomeScreen';
-export {default as SplashScreen} from './splashScreen/SplashScreen'
+export {default as SplashScreen} from './splashScreen/SplashScreen';
+export {default as DetailInputScreen} from './DetailInputScreen/DetailInputScreen'
