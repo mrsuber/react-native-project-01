@@ -9,6 +9,7 @@ import {
   FogotPasswordScreen,
   NewPasswordScreen,
   HomeScreen,
+  SplashScreen,
 } from '../screens';
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />

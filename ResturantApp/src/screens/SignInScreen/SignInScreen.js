@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
 } from 'react-native';
-import Logo from '../../../assets/images/suber_logo1.png'
+import Logo from '../../../assets/images/logo.png'
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
 import {useNavigation} from '@react-navigation/native'
 
@@ -80,9 +80,10 @@ const styles = StyleSheet.create({
   root:{
     alignItems: 'center',
     padding: 20,
+    backgroundColor:'white',
   },
   logo: {
-    width: '70%',
+    width: '40%',
     maxWidth: 500,
     maxHeight: 200,
   },
