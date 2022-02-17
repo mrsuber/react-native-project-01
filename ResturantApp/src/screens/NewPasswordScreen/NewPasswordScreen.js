@@ -29,6 +29,7 @@ const NewPasswordScreen = () => {
           value={newPassword}
           setValue={setNewPassword}
           placeholder="Enter New Password"
+          secureTextEntry={true}
         />
         <CustomButton text="Submit" onPress={onSubmitPressed} />
 

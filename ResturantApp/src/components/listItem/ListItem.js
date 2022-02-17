@@ -4,7 +4,7 @@ import {View, Text, StyleSheet,TouchableOpacity, Image} from 'react-native';
 //
 // Icon.loadFont();
 // <Icon name="remove" size={20} color="firebrick"/>
-const ListItem = ({info,deleteItem}) => {
+const ListItem = ({info, deleteItem, detailsInputScreen}) => {
   return (
     <TouchableOpacity style={styles.listInfo} key={info.id}>
       <View style={styles.listInfoView}>
@@ -12,7 +12,7 @@ const ListItem = ({info,deleteItem}) => {
           {info.FirstName} {' '} {info.LastName}
         </Text>
         <View style={styles.btnContainer}>
-          <Text style={styles.btn}>detail</Text>
+          <Text style={styles.btn} onPress={detailsInputScreen}>detail</Text>
           <Text style={styles.btn} onPress={() => deleteItem(info.id)}>
             remove
           </Text>

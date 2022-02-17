@@ -39,6 +39,7 @@ const SignInScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
+
         <Image
           source={Logo}
           style={[styles.logo, {height: height * 0.3}]}
@@ -67,9 +68,10 @@ const SignInScreen = () => {
         <SocialSignInButton />
 
         <CustomButton
-          text="Don't have an account? Create one"
+          text="Don't have an account? Create one."
           onPress={onSignUpPress}
           type="TERTIARY"
+
         />
       </View>
     </ScrollView>
@@ -80,10 +82,10 @@ const styles = StyleSheet.create({
   root:{
     alignItems: 'center',
     padding: 20,
-    backgroundColor:'white',
   },
   logo: {
-    width: '40%',
+    width: '50%',
+
     maxWidth: 500,
     maxHeight: 200,
   },
