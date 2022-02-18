@@ -1,1 +1,1 @@
-web:node --chdir ./MERNstack server.js
+web:node server.js
