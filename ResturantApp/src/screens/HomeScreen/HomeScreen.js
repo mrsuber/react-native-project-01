@@ -24,7 +24,7 @@ const data = [
     MotherName:'mother',
     PhoneNumber:'+23755465548',
     IdCardNumber:'1222211455211',
-    Town:'Buea',
+    Region:'south west',
     Residence:'Buea',
     Images: [`${img}`, `${img}`, `${img}`, `${img}`],
   },
@@ -38,7 +38,7 @@ const data = [
     MotherName:'mother2',
     PhoneNumber:'+23755465548',
     IdCardNumber:'1222211455211',
-    Town:'Buea2',
+    Region:'North',
     Residence:'Buea2',
     Images: [`${img}`, `${img}`, `${img}`, `${img}`],
   },
@@ -52,7 +52,7 @@ const data = [
     MotherName:'mother3',
     PhoneNumber:'+23755465548',
     IdCardNumber:'1222211455211',
-    Town:'Buea3',
+    Region:'north west',
     Residence:'Buea3',
     Images: [`${img}`, `${img}`, `${img}`, `${img}`],
   }
@@ -61,6 +61,7 @@ const data = [
 
 const HomeScreen = () => {
   const [infos, setInfos] = useState(data);
+  // const [detail, setDetail] = useState([])
   const navigation = useNavigation();
 
   const deleteItem = id => {
@@ -69,8 +70,45 @@ const HomeScreen = () => {
     })
   }
 
-  const detailsInputScreen = () => {
-    console.warn('pop up with full detail');
+  const detailsInputScreen = (id) => {
+    let detail = []
+    for (let i = 0; i < infos.length; i++) {
+
+      if (id === infos[i].id) {
+        detail.push(infos[i])
+      } else continue;
+    }
+
+    Alert.alert(
+      `Details of ${detail[0].FirstName} ${detail[0].LastName}`,
+      `Date of birth ${detail[0].DateOfBirth},
+      Place of birth ${detail[0].PlaceOfBirth},
+      Mothers Name ${detail[0].MotherName},
+      Phone number ${detail[0].PhoneNumber},
+      ID card nuber ${detail[0].IdCardNumber},
+      Region ${detail[0].Region},
+      Residence ${detail[0].Residence}`,
+
+      [
+        {
+          text: 'Back',
+
+          style: 'cancel',
+        },
+      {
+        text: 'Remove',
+          onPress: () => deleteItem(detail[0].id),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () =>
+          Alert.alert(
+            'This alert was dismissed by tapping outside of the alert dialog.',
+          ),
+      },
+  );
   };
 
   const addInfo = info => {
@@ -88,7 +126,7 @@ const HomeScreen = () => {
           MotherName:info.MotherName,
           PhoneNumber:info.PhoneNumber,
           IdCardNumber:info.IdCardNumber,
-          Town:info.Town,
+          Region:info.Region,
           Residence: info.Residence,
           Images: images2,
         },

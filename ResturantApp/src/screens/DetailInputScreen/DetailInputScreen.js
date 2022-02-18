@@ -10,7 +10,12 @@ import {
   useWindowDimensions,
 
 } from 'react-native';
-import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
+import {
+  CustomInput,
+  CustomButton,
+  CustomDropdown,
+  CustomRecidentDropdown,
+} from '../../components';
 import {useNavigation} from '@react-navigation/native'
 import ImagePicker from 'react-native-image-crop-picker'
 import img from '../../../assets/images/me.png'
@@ -31,8 +36,8 @@ const DetailInputScreen = ({addInfo}) => {
   const [motherName, setMotherName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [idCardNumber, setIdCardNumber] = useState('')
-  const [town, setTown] = useState('')
-  const [residence, setResidence] = useState('')
+  const [region, setRegion] = useState('Southwest')
+  const [residence, setResidence] = useState('Buea')
 
 
   const [idCardFront, setIdCardFront] = useState('')
@@ -63,7 +68,7 @@ const DetailInputScreen = ({addInfo}) => {
     MotherName:motherName,
     PhoneNumber:phoneNumber,
     IdCardNumber:idCardNumber,
-    Town:town,
+    Region:region,
     Residence:residence,
     Images: [idCardFront, idCardBack, passport1, passport2],
   };
@@ -83,18 +88,18 @@ const DetailInputScreen = ({addInfo}) => {
       Alert.alert('Error', 'please enter phone number')
     } else if (!idCardNumber) {
       Alert.alert('Error', 'please enter Id card number')
-    } else if (!town) {
-      Alert.alert('Error', 'please enter your town')
+    } else if (!region) {
+      Alert.alert('Error', 'please enter your region')
     } else if (!residence) {
       Alert.alert('Error', 'please enter your recident')
     } else if (!idCardFront) {
-      Alert.alert('Error', 'please enter your recident')
+      Alert.alert('Error', 'please enter your Front Image of Id Card')
     } else if (!idCardBack) {
-      Alert.alert('Error', 'please enter your recident')
+      Alert.alert('Error', 'please enter your Back Image of Id Card')
     } else if (!passport1) {
-      Alert.alert('Error', 'please enter your recident')
+      Alert.alert('Error', 'please enter your Passport 1')
     } else if (!passport2) {
-      Alert.alert('Error', 'please enter your recident')
+      Alert.alert('Error', 'please enter your Passport 2')
     } else {
       addInfo(obj);
     }
@@ -334,13 +339,8 @@ const DetailInputScreen = ({addInfo}) => {
           placeholder="2325554555654"
 
         />
-        <CustomInput value={town} setValue={setTown} placeholder="Buea" />
-        <CustomInput
-          value={residence}
-          setValue={setResidence}
-          placeholder="Moliko"
-
-        />
+        <CustomDropdown value={region} setValue={setRegion} />
+        <CustomRecidentDropdown region ={region} value={residence} setValue={setResidence} />
 
         <View style={styles.btnCardContainer} >
         <TouchableOpacity style={styles.btnCard} onPress={uploadIdPhotoFront}>

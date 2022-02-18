@@ -6,6 +6,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Logo from '../../../assets/images/logo.png'
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
@@ -15,12 +16,28 @@ const SignInScreen = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
-  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
 
   const onSignInPressed = () => {
     //validate user
-    navigation.navigate('Home')
+    if (!email) {
+      Alert.alert('Error', 'please enter email')
+    } else if (!validateEmail(email)) {
+      Alert.alert('Error', 'please enter a valid email. example@gmail.com')
+    } else if (!password) {
+      Alert.alert('Error', 'please enter password')
+    } else if (password.length < 6) {
+      Alert.alert('Error', 'password must be at least 6 chars long')
+    } else {
+      navigation.navigate('Home');
+    }
+  
   }
 
   const onForgotPasswordPressed = () => {
@@ -47,9 +64,9 @@ const SignInScreen = () => {
         />
 
         <CustomInput
-          value={userName}
-          setValue={setUserName}
-          placeholder="UserName"
+          value={email}
+          setValue={setEmail}
+          placeholder="Example@gmail.com"
         />
         <CustomInput
           value={password}

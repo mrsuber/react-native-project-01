@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView,Alert} from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
 import {useNavigation} from '@react-navigation/native'
-
+import valid from '../../utils/valid'
 
 
 const SignUpScreen = () => {
@@ -13,12 +13,34 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState('')
   const [cf_password, setCf_Password] = useState('')
 
-  const onRegisterPressed = () => {
-    //verify register confirm email
-    navigation.navigate('ConfirmEmail');
+
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 
+  const onRegisterPressed = () => {
+    //verify register confirm email
 
+    if (!username) {
+      Alert.alert('Error', 'please enter full name')
+    } else if (username.length < 3) {
+      Alert.alert('Error', 'fullname must be atleast 3 characters');
+    } else if (!email) {
+      Alert.alert('Error', 'please enter email')
+    } else if (!validateEmail(email)) {
+      Alert.alert('Error', 'please enter a valid email. example@gmail.com')
+    } else if (!password) {
+      Alert.alert('Error', 'please enter password')
+    } else if (password.length < 6) {
+      Alert.alert('Error', 'password must be at least 6 chars long')
+    } else if (password !== cf_password) {
+      Alert.alert('Error', 'Passwords do not match')
+    } else {
+      navigation.navigate('Home');
+    }
+
+  }
 
 
   const onSignInPress = () => {

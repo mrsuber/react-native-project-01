@@ -12,7 +12,7 @@ const ListItem = ({info, deleteItem, detailsInputScreen}) => {
           {info.FirstName} {' '} {info.LastName}
         </Text>
         <View style={styles.btnContainer}>
-          <Text style={styles.btn} onPress={detailsInputScreen}>detail</Text>
+          <Text style={styles.btn} onPress={() => detailsInputScreen(info.id)}>detail</Text>
           <Text style={styles.btn} onPress={() => deleteItem(info.id)}>
             remove
           </Text>

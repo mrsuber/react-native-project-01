@@ -9,7 +9,7 @@ const NewPasswordScreen = () => {
   const navigation = useNavigation();
 
   const onSubmitPressed = () => {
-    navigation.navigate('Home');
+    navigation.navigate('SignIn');
   };
 
   const onSignInPress = () => {
@@ -23,7 +23,7 @@ const NewPasswordScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text style={styles.title}>New your password</Text>
+        <Text style={styles.title}>Create New password</Text>
         <CustomInput value={code} setValue={setCode} placeholder="Enter Code" />
         <CustomInput
           value={newPassword}

@@ -5,3 +5,6 @@ export {default as SplashBtn} from './splashBtn/SplashBtn'
 export {default as Header} from './Header/Header';
 export {default as ListItem} from './listItem/ListItem'
 export {default as AddInfo} from './addInfo/AddInfo'
+export {default as CustomDropdown} from './CustomDropdown/CustomDropdown'
+export {default as ModalPicker} from './ModalPicker/ModalPicker'
+export {default as CustomRecidentDropdown} from './CustomRecidentDropdown/CustomRecidentDropdown'
