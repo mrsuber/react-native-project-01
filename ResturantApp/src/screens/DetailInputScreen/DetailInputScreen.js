@@ -6,17 +6,22 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Image,
+  useWindowDimensions,
+
 } from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
 import {useNavigation} from '@react-navigation/native'
 import ImagePicker from 'react-native-image-crop-picker'
-
+import img from '../../../assets/images/me.png'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 Icon.loadFont();
 //
 
 const DetailInputScreen = ({addInfo}) => {
+
+  const {height} = useWindowDimensions();
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('')
@@ -28,8 +33,12 @@ const DetailInputScreen = ({addInfo}) => {
   const [idCardNumber, setIdCardNumber] = useState('')
   const [town, setTown] = useState('')
   const [residence, setResidence] = useState('')
-  const [idCardImage, setIdCardImage] = useState('')
-  const [passportImage, setPassportImage] = useState('')
+
+
+  const [idCardFront, setIdCardFront] = useState('')
+  const [idCardBack, setIdCardBack] = useState('')
+  const [passport1, setPassport1] = useState('')
+  const [passport2, setPassport2] = useState('')
 
 
 
@@ -56,8 +65,7 @@ const DetailInputScreen = ({addInfo}) => {
     IdCardNumber:idCardNumber,
     Town:town,
     Residence:residence,
-    IdCardImage:idCardImage,
-    PhotoImage:passportImage,
+    Images: [idCardFront, idCardBack, passport1, passport2],
   };
 
   const onInfoSubmitPressed = () => {
@@ -79,46 +87,117 @@ const DetailInputScreen = ({addInfo}) => {
       Alert.alert('Error', 'please enter your town')
     } else if (!residence) {
       Alert.alert('Error', 'please enter your recident')
+    } else if (!idCardFront) {
+      Alert.alert('Error', 'please enter your recident')
+    } else if (!idCardBack) {
+      Alert.alert('Error', 'please enter your recident')
+    } else if (!passport1) {
+      Alert.alert('Error', 'please enter your recident')
+    } else if (!passport2) {
+      Alert.alert('Error', 'please enter your recident')
     } else {
       addInfo(obj);
     }
   };
 
-
-
-  const takePhotoFromCamera = () =>{
+  const takePhotoFromCamera1 = () => {
     ImagePicker.openCamera({
       width:300,
       height:400,
       cropping:true,
     }).then(image => {
-      console.log(image)
+      setPassport1(image.path)
     })
   }
 
-  const choosePhotoFromLibrary =() => {
+  const choosePhotoFromLibrary1 = () => {
     ImagePicker.openPicker({
       width:300,
       height:400,
       cropping:true,
     }).then(image => {
-      console.log(image)
+      setPassport1(image.path)
     })
   }
 
-  const uploadPassPort = () => {
+  const takePhotoFromCamera2 = () => {
+    ImagePicker.openCamera({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      setPassport2(image.path)
+    })
+  }
+
+  const choosePhotoFromLibrary2 = () => {
+    ImagePicker.openPicker({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      setPassport2(image.path)
+    })
+  }
+
+  const takePhotoFromCamera3 = () => {
+    ImagePicker.openCamera({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      // console.log("front image",image)
+      // console.warn(image.path);
+      setIdCardFront(image.path)
+
+
+
+    })
+  }
+
+  const choosePhotoFromLibrary3 = () => {
+    ImagePicker.openPicker({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      setIdCardFront(image.path)
+    })
+  }
+
+  const takePhotoFromCamera4 = () => {
+    ImagePicker.openCamera({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      setIdCardBack(image.path)
+    })
+  }
+
+  const choosePhotoFromLibrary4 = () => {
+    ImagePicker.openPicker({
+      width:300,
+      height:400,
+      cropping:true,
+    }).then(image => {
+      setIdCardBack(image.path)
+    })
+  }
+
+  const uploadPassPort1 = () => {
     Alert.alert(
       'Upload Photo',
       'Choose Method of Upload',
       [
         {
           text: 'Galary',
-          onPress: () => choosePhotoFromLibrary(),
+          onPress: () => choosePhotoFromLibrary1(),
           style: 'cancel',
         },
       {
         text: 'Camera',
-          onPress: () => takePhotoFromCamera(),
+          onPress: () => takePhotoFromCamera1(),
           style: 'cancel',
         },
       ],
@@ -132,19 +211,71 @@ const DetailInputScreen = ({addInfo}) => {
   );
   };
 
-  const uploadIdPhoto = () => {
+  const uploadPassPort2 = () => {
     Alert.alert(
       'Upload Photo',
       'Choose Method of Upload',
       [
         {
           text: 'Galary',
-          onPress: () =>choosePhotoFromLibrary(),
+          onPress: () => choosePhotoFromLibrary2(),
           style: 'cancel',
         },
       {
         text: 'Camera',
-          onPress: () => takePhotoFromCamera(),
+          onPress: () => takePhotoFromCamera2(),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () =>
+          Alert.alert(
+            'This alert was dismissed by tapping outside of the alert dialog.',
+          ),
+      },
+  );
+  };
+
+  const uploadIdPhotoFront = () => {
+    Alert.alert(
+      'Upload Photo',
+      'Choose Method of Upload',
+      [
+        {
+          text: 'Galary',
+          onPress: () =>choosePhotoFromLibrary3(),
+          style: 'cancel',
+        },
+      {
+        text: 'Camera',
+          onPress: () => takePhotoFromCamera3(),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () =>
+          Alert.alert(
+            'This alert was dismissed by tapping outside of the alert dialog.',
+          ),
+      },
+  );
+  }
+
+  const uploadIdPhotoBack = () => {
+    Alert.alert(
+      'Upload Photo',
+      'Choose Method of Upload',
+      [
+        {
+          text: 'Galary',
+          onPress: () =>choosePhotoFromLibrary4(),
+          style: 'cancel',
+        },
+      {
+        text: 'Camera',
+          onPress: () => takePhotoFromCamera4(),
           style: 'cancel',
         },
       ],
@@ -210,24 +341,67 @@ const DetailInputScreen = ({addInfo}) => {
           placeholder="Moliko"
 
         />
-        <CustomInput
-          value={idCardImage}
-          setValue={setIdCardImage}
-          placeholder="image"
 
+        <View style={styles.btnCardContainer} >
+        <TouchableOpacity style={styles.btnCard} onPress={uploadIdPhotoFront}>
+          {
+            idCardFront===''
+          ? <View style={styles.btnCardTextView}>
+            <Text>
+              <Icon name="camera" size={20} color="#ff7800" />
+            </Text>
+            <Text style={styles.btnCardText}>{'    '}Id Card Front</Text>
+          </View>
+        : <Image
+          source={{uri:idCardFront}}
+          style={styles.logo}
+          resizeMode="contain"
         />
-
-        <TouchableOpacity style={styles.btnCard} onPress={uploadIdPhoto}>
-          <Text style={styles.btnCardText}>
-            <Icon name="camera" size={20} color="#ff7800" />{'    '} Upload Id Card Photo
-          </Text>
+        }
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnCard} onPress={uploadPassPort}>
-          <Text style={styles.btnCardText}>
-            <Icon name="camera" size={20} color="#ff7800" />{'    '} Upload Passport Photo
+        <TouchableOpacity style={styles.btnCard} onPress={uploadIdPhotoBack}>
+          {idCardBack===''
+          ?<Text style={styles.btnCardText}>
+            <Icon name="camera" size={20} color="#ff7800" />{'    '} Id Card Back
           </Text>
+          :<Image
+            source={{uri:idCardBack}}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        }
         </TouchableOpacity>
+        </View>
+
+
+        <View style={styles.btnCardContainer} >
+        <TouchableOpacity style={styles.btnCard} onPress={uploadPassPort1}>
+          {passport1===''
+            ?<Text style={styles.btnCardText}>
+            <Icon name="camera" size={20} color="#ff7800" />{'    '}Passport Photo1
+          </Text>
+          :<Image
+            source={{uri:passport1}}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        }
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnCard} onPress={uploadPassPort2}>
+          {passport2===''
+            ?<Text style={styles.btnCardText}>
+            <Icon name="camera" size={20} color="#ff7800" />{'    '} Passport Photo2
+          </Text>
+          :<Image
+            source={{uri:passport2}}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        }
+        </TouchableOpacity>
+        </View>
 
         <TouchableOpacity style={styles.btn} onPress={onInfoSubmitPressed}>
           <Text style={styles.btnText}>
@@ -272,24 +446,40 @@ const styles = StyleSheet.create({
     borderRadius:10,
 
   },
+  btnCardContainer:{
+    flexDirection:'row',
+  },
   btnCard:{
     backgroundColor:'#e3e3e396',
-    width:'100%',
+    width:150,
+    height:150,
     borderColor:'#e8e8e8',
-    padding:9,
+    display:'flex',
     margin:5,
     borderRadius:5,
+    alignItems:'center',
+    justifyContent:'center',
 
   },
   btnCardText:{
     color:'#fdb075',
-    fontSize:20,
+    fontSize:14,
+    fontWeight:'bold',
+
+  },
+  btnCardTextView:{
+    flexDirection:'row',
+
 
   },
   btnText:{
     color:'white',
     fontSize:20,
     textAlign:'center',
+  },
+  logo: {
+    width:150,
+    height:150,
   },
 })
 export default DetailInputScreen

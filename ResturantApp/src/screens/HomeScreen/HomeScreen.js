@@ -10,6 +10,7 @@ import {
 import {Header,ListItem, AddInfo} from '../../components';
 import {DetailInputScreen} from '../../screens'
 import img from '../../../assets/images/me.png'
+import {imageUpload} from '../../utils/imageUpload'
 
 import {useNavigation} from '@react-navigation/native'
 
@@ -25,8 +26,7 @@ const data = [
     IdCardNumber:'1222211455211',
     Town:'Buea',
     Residence:'Buea',
-    IdCardImage:`${img}`,
-    PhotoImage:`${img}`,
+    Images: [`${img}`, `${img}`, `${img}`, `${img}`],
   },
 
   {
@@ -40,8 +40,7 @@ const data = [
     IdCardNumber:'1222211455211',
     Town:'Buea2',
     Residence:'Buea2',
-    IdCardImage:`${img}`,
-    PhotoImage:`${img}`,
+    Images: [`${img}`, `${img}`, `${img}`, `${img}`],
   },
 
   {
@@ -55,8 +54,7 @@ const data = [
     IdCardNumber:'1222211455211',
     Town:'Buea3',
     Residence:'Buea3',
-    IdCardImage:`${img}`,
-    PhotoImage:`${img}`,
+    Images: [`${img}`, `${img}`, `${img}`, `${img}`],
   }
 ];
 
@@ -76,6 +74,9 @@ const HomeScreen = () => {
   };
 
   const addInfo = info => {
+    const images2 = imageUpload(info.Images)
+    // console.log(images2)
+    console.warn(images2)
     setInfos(prevInfo =>{
       return [
         {
@@ -88,42 +89,14 @@ const HomeScreen = () => {
           PhoneNumber:info.PhoneNumber,
           IdCardNumber:info.IdCardNumber,
           Town:info.Town,
-          Residence:info.Residence,
-          IdCardImage:info.IdCardImage,
-          PhotoImage:info.PhotoImage,
+          Residence: info.Residence,
+          Images: images2,
         },
         ...prevInfo
       ]
     })
   }
 
-  const [media, setMedia] = useState([])
-
-  const handleChangeMedia = (e) =>{
-
-      const files = [...e.target.files]
-      let err = ""
-      let newMedia = []
-
-      files.forEach(file =>{
-        if(!file) return err="File does not exist."
-        if(file.size > 1024 * 1024 * 5 ){
-          return err = "The image/video largest is 5mb."
-        }
-
-        return newMedia.push(file)
-
-      })
-
-      if(err)dispatch({ type:GLOBALTYPES.ALERT,payload:{error:err} })
-      setMedia([...media, ...newMedia])
-  }
-
-  const handleDeleteMedia = (index) =>{
-    const newArr = [...media]
-    newArr.splice(index,1)
-    setMedia(newArr)
-  }
 
 
   return (
