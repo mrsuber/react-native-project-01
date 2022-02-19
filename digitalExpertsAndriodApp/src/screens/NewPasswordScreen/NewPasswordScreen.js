@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components'
 import {useNavigation} from '@react-navigation/native'
 
-const NewPasswordScreen = () => {
+const NewPasswordScreen = ({token,setToken}) => {
   const [code, setCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const navigation = useNavigation();

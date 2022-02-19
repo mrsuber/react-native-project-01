@@ -4,7 +4,7 @@ import {CustomInput, CustomButton, SocialSignInButton} from '../../components'
 import {useNavigation} from '@react-navigation/native'
 
 
-const ConfirmEmailScreen = () => {
+const ConfirmEmailScreen = ({token,setToken}) => {
 
   const navigation = useNavigation();
 

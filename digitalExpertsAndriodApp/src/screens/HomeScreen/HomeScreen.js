@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,10 +7,11 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {Header,ListItem, AddInfo} from '../../components';
+import {Header,ListItem, AddInfo, CustomButton} from '../../components';
 import {DetailInputScreen} from '../../screens'
 import img from '../../../assets/images/me.png'
 import {imageUpload} from '../../utils/imageUpload'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import {useNavigation} from '@react-navigation/native'
 
@@ -61,6 +62,7 @@ const data = [
 
 const HomeScreen = () => {
   const [infos, setInfos] = useState(data);
+  const [loading, setLoading] = useState(false)
   // const [detail, setDetail] = useState([])
   const navigation = useNavigation();
 
@@ -111,7 +113,40 @@ const HomeScreen = () => {
   );
   };
 
-  const addInfo = info => {
+  const addInfo = info =>{
+
+        Alert.alert(
+          `Details of ${info.FirstName} ${info.LastName}`,
+          `Date of birth ${info.DateOfBirth},
+          Place of birth ${info.PlaceOfBirth},
+          Mothers Name ${info.MotherName},
+          Phone number ${info.PhoneNumber},
+          ID card nuber ${info.IdCardNumber},
+          Region ${info.Region},
+          Residence ${info.Residence}`,
+
+          [
+            {
+              text: 'Back',
+
+              style: 'cancel',
+            },
+          {
+            text: 'Confirm',
+              onPress: () => addInfo2(info),
+              style: 'cancel',
+            },
+          ],
+          {
+            cancelable: true,
+            onDismiss: () =>
+              Alert.alert(
+                'This alert was dismissed by tapping outside of the alert dialog.',
+              ),
+          },
+      );
+  }
+  const addInfo2 = info => {
     const images2 = imageUpload(info.Images)
     // console.log(images2)
     console.warn(images2)
@@ -135,12 +170,43 @@ const HomeScreen = () => {
     })
   }
 
+  const onLogOutPress = async () =>{
+    try {
+      setLoading(true)
+      await AsyncStorage.setItem('authToken', '');
+      navigation.navigate('SignIn');
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      Alert.alert("Error","An error ocured during log out, try again")
+      // saving error
+    }
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+  try {
+        const value = await AsyncStorage.getItem('authToken');
+        if (value !== '' && value !== null) {
+          // value previously stored
+
+          navigation.navigate('Home');
+        } else {
+        navigation.navigate('SignIn');
+        }
+      } catch (e) {
+    // error reading value
+  }
+    };
+
+    getData();
+  }, [navigation]);
 
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
-        <Header title="User Info" />
+        <Header title= 'Wellcome to Digital Experts' />
         <DetailInputScreen addInfo={addInfo}/>
         {infos.map((info, index) => (
           <ListItem
@@ -151,6 +217,10 @@ const HomeScreen = () => {
           />
       ))}
     </View>
+      {
+        loading
+        ? <CustomButton text="Logging out ..." type="TERTIARY" />
+        : <CustomButton text="Log out" onPress={onLogOutPress} type="TERTIARY" />}
     </ScrollView>
   );
 };

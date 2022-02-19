@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,24 +7,28 @@ import {
   useWindowDimensions,
   ScrollView,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 import Logo from '../../../assets/images/logo.png'
+import axios from 'axios'
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
-import {useNavigation} from '@react-navigation/native'
-
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const SignInScreen = () => {
+
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  function validateEmail(email) {
+  function validateEmail(emailToTest) {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    return re.test(emailToTest);
   }
 
-  const onSignInPressed = () => {
+  const onSignInPressed = async () => {
     //validate user
     if (!email) {
       Alert.alert('Error', 'please enter email')
@@ -35,10 +39,58 @@ const SignInScreen = () => {
     } else if (password.length < 6) {
       Alert.alert('Error', 'password must be at least 6 chars long')
     } else {
-      navigation.navigate('Home');
+      const config = {
+        header:{
+          'Content-Type': 'application/json',
+        }
+      }
+
+      try {
+        setLoading(true)
+        const {data} = await axios.post(
+          'https://digital-experts.herokuapp.com/api/auth/login',
+          {email, password},
+          config,
+        );
+
+        try {
+          await AsyncStorage.setItem('authToken', data.token);
+          navigation.navigate('Home');
+          setLoading(false)
+        } catch (error) {
+          setLoading(false)
+          Alert.alert("Error","An error ocured during signIn, try again")
+          // saving error
+        }
+      } catch (error) {
+        setLoading(false)
+        Alert.alert('Error', "Invalid credentials");
+
+        // setError(error.response.data.error)
+        //   setTimeout(()=>{
+        //     setError("")
+        //   },5000)
+      }
     }
-  
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+  try {
+        const value = await AsyncStorage.getItem('authToken');
+        if (value !== '' && value !== null) {
+          // value previously stored
+        navigation.navigate('Home');
+        } else {
+          navigation.navigate('SignIn');
+        }
+      } catch (e) {
+    // error reading value
   }
+    };
+
+    getData();
+  }, [navigation]);
 
   const onForgotPasswordPressed = () => {
     navigation.navigate('ForgotPassword');
@@ -74,7 +126,9 @@ const SignInScreen = () => {
           placeholder="Password"
           secureTextEntry={true}
         />
-        <CustomButton text="Sign In" onPress={onSignInPressed} />
+        { loading
+          ?<CustomButton text="Submiting ..." />
+          :<CustomButton text="Sign In" onPress={onSignInPressed} />}
 
         <CustomButton
           text="Forgot password?"
@@ -84,12 +138,7 @@ const SignInScreen = () => {
 
         <SocialSignInButton />
 
-        <CustomButton
-          text="Don't have an account? Create one."
-          onPress={onSignUpPress}
-          type="TERTIARY"
-
-        />
+        
       </View>
     </ScrollView>
   )
