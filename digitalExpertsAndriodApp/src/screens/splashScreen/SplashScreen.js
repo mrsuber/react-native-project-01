@@ -19,11 +19,7 @@ const SplashScreen = () => {
         style={[styles.logo, {height: height * 0.3}]}
         resizeMode="contain"
       />
-      <SplashBtn
-      text="Get Started"
-      onPress={onSignInPressed}
-      type="TERTIARY"
-      />
+      <SplashBtn text="Get Started" onPress={onSignInPressed} type="TERTIARY" />
     </View>
   );
 };

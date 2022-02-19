@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components'
 import {useNavigation} from '@react-navigation/native'
 
-const FogotPasswordScreen = () => {
+const FogotPasswordScreen = ({token,setToken}) => {
   const navigation = useNavigation();
 
   const [code, setCode] = useState('');

@@ -7,6 +7,7 @@ import {
   ScrollView,
   Alert,
   Image,
+  Modal,
   useWindowDimensions,
 
 } from 'react-native';
@@ -15,6 +16,7 @@ import {
   CustomButton,
   CustomDropdown,
   CustomRecidentDropdown,
+  ModalPicker2
 } from '../../components';
 import {useNavigation} from '@react-navigation/native'
 import ImagePicker from 'react-native-image-crop-picker'
@@ -43,10 +45,18 @@ const DetailInputScreen = ({addInfo}) => {
   const [idCardFront, setIdCardFront] = useState('')
   const [idCardBack, setIdCardBack] = useState('')
   const [passport1, setPassport1] = useState('')
-  const [passport2, setPassport2] = useState('')
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [chooseData, setChooseData] = useState('')
 
+  const changeModalVisibility = bool => {
+    setIsModalVisible(bool)
 
+  }
 
+  const setData = option => {
+    setChooseData(option)
+    // setValue(option)
+  }
 
   //generates random id;
   let guid = () => {
@@ -70,7 +80,9 @@ const DetailInputScreen = ({addInfo}) => {
     IdCardNumber:idCardNumber,
     Region:region,
     Residence:residence,
-    Images: [idCardFront, idCardBack, passport1, passport2],
+    IdCardFront: idCardFront,
+    IdCardBack: idCardBack,
+    Passport1: passport1,
   };
 
   const onInfoSubmitPressed = () => {
@@ -98,13 +110,15 @@ const DetailInputScreen = ({addInfo}) => {
       Alert.alert('Error', 'please enter your Back Image of Id Card')
     } else if (!passport1) {
       Alert.alert('Error', 'please enter your Passport 1')
-    } else if (!passport2) {
-      Alert.alert('Error', 'please enter your Passport 2')
     } else {
-      addInfo(obj);
+      changeModalVisibility(true)
+
     }
   };
-
+  const runAddInfo = () => {
+    addInfo(obj);
+    changeModalVisibility(false)
+  }
   const takePhotoFromCamera1 = () => {
     ImagePicker.openCamera({
       width:300,
@@ -125,25 +139,6 @@ const DetailInputScreen = ({addInfo}) => {
     })
   }
 
-  const takePhotoFromCamera2 = () => {
-    ImagePicker.openCamera({
-      width:300,
-      height:400,
-      cropping:true,
-    }).then(image => {
-      setPassport2(image.path)
-    })
-  }
-
-  const choosePhotoFromLibrary2 = () => {
-    ImagePicker.openPicker({
-      width:300,
-      height:400,
-      cropping:true,
-    }).then(image => {
-      setPassport2(image.path)
-    })
-  }
 
   const takePhotoFromCamera3 = () => {
     ImagePicker.openCamera({
@@ -216,31 +211,6 @@ const DetailInputScreen = ({addInfo}) => {
   );
   };
 
-  const uploadPassPort2 = () => {
-    Alert.alert(
-      'Upload Photo',
-      'Choose Method of Upload',
-      [
-        {
-          text: 'Galary',
-          onPress: () => choosePhotoFromLibrary2(),
-          style: 'cancel',
-        },
-      {
-        text: 'Camera',
-          onPress: () => takePhotoFromCamera2(),
-          style: 'cancel',
-        },
-      ],
-      {
-        cancelable: true,
-        onDismiss: () =>
-          Alert.alert(
-            'This alert was dismissed by tapping outside of the alert dialog.',
-          ),
-      },
-  );
-  };
 
   const uploadIdPhotoFront = () => {
     Alert.alert(
@@ -387,20 +357,7 @@ const DetailInputScreen = ({addInfo}) => {
             resizeMode="contain"
           />
         }
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btnCard} onPress={uploadPassPort2}>
-          {passport2===''
-            ?<Text style={styles.btnCardText}>
-            <Icon name="camera" size={20} color="#ff7800" />{'    '} Passport Photo2
-          </Text>
-          :<Image
-            source={{uri:passport2}}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        }
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity style={styles.btn} onPress={onInfoSubmitPressed}>
@@ -408,6 +365,31 @@ const DetailInputScreen = ({addInfo}) => {
             <Icon name="plus" size={20} color="#ff7800" />{'  '} Add Info
           </Text>
         </TouchableOpacity>
+        <Modal
+          transparent={true}
+            animationType="fade"
+            visible={isModalVisible}
+            nRequestClose={() => changeModalVisibility(false)}>
+            <ModalPicker2
+              changeModalVisibility={changeModalVisibility}
+              setData={setData}
+              selectRegion={true}
+              runAddInfo={runAddInfo}
+              firstName={firstName}
+              lastName={lastName}
+              dateOfBirth={dateOfBirth}
+              placeOfBirth={placeOfBirth}
+              motherName={motherName}
+              phoneNumber={phoneNumber}
+              idCardNumber={idCardNumber}
+              region={region}
+              residence={residence}
+              idCardFront={idCardFront}
+              idCardBack={idCardBack}
+              passport1={passport1}
+
+            />
+        </Modal>
 
       </View>
     </ScrollView>
