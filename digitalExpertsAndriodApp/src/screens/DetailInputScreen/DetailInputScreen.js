@@ -80,7 +80,9 @@ const DetailInputScreen = ({addInfo}) => {
     IdCardNumber:idCardNumber,
     Region:region,
     Residence:residence,
-    Images: [idCardFront, idCardBack, passport1],
+    IdCardFront: idCardFront,
+    IdCardBack: idCardBack,
+    Passport1: passport1,
   };
 
   const onInfoSubmitPressed = () => {
@@ -109,10 +111,14 @@ const DetailInputScreen = ({addInfo}) => {
     } else if (!passport1) {
       Alert.alert('Error', 'please enter your Passport 1')
     } else {
-      addInfo(obj);
+      changeModalVisibility(true)
+
     }
   };
-
+  const runAddInfo = () => {
+    addInfo(obj);
+    changeModalVisibility(false)
+  }
   const takePhotoFromCamera1 = () => {
     ImagePicker.openCamera({
       width:300,
@@ -354,7 +360,7 @@ const DetailInputScreen = ({addInfo}) => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.btn} onPress={() => changeModalVisibility(true)}>
+        <TouchableOpacity style={styles.btn} onPress={onInfoSubmitPressed}>
           <Text style={styles.btnText}>
             <Icon name="plus" size={20} color="#ff7800" />{'  '} Add Info
           </Text>
@@ -368,7 +374,20 @@ const DetailInputScreen = ({addInfo}) => {
               changeModalVisibility={changeModalVisibility}
               setData={setData}
               selectRegion={true}
-              onInfoSubmitPressed={onInfoSubmitPressed}
+              runAddInfo={runAddInfo}
+              firstName={firstName}
+              lastName={lastName}
+              dateOfBirth={dateOfBirth}
+              placeOfBirth={placeOfBirth}
+              motherName={motherName}
+              phoneNumber={phoneNumber}
+              idCardNumber={idCardNumber}
+              region={region}
+              residence={residence}
+              idCardFront={idCardFront}
+              idCardBack={idCardBack}
+              passport1={passport1}
+
             />
         </Modal>
 

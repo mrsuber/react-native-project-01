@@ -163,7 +163,9 @@ const HomeScreen = () => {
           IdCardNumber:info.IdCardNumber,
           Region:info.Region,
           Residence: info.Residence,
-          Images: images2,
+          IdCardFront:info.IdCardFront,
+          IdCardBack:info.IdCardBack,
+          Passport1: info.Passport1,
         },
         ...prevInfo
       ]
@@ -207,7 +209,7 @@ const HomeScreen = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
         <Header title= 'Wellcome to Digital Experts' />
-        <DetailInputScreen addInfo={addInfo}/>
+        <DetailInputScreen addInfo={addInfo2}/>
         {infos.map((info, index) => (
           <ListItem
             info={info}
