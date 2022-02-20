@@ -28,6 +28,8 @@ const LoginScreen = ({history}) => {
     try{
        const {data}= await axios.post("/api/auth/login",{email,password},config);
        localStorage.setItem("authToken",data.token)
+       localStorage.setItem("someRandomNumber", data.userId)
+       localStorage.setItem("someName", data.username)
        history.push("/")
     }catch(error){
       setError(error.response.data.error)
@@ -65,7 +67,6 @@ const LoginScreen = ({history}) => {
               <span></span>
               Submit
             </button>
-            <span className="login-subtext">Don't have an account? <b className="register-link"  ><Link to='/register' className="link">Register</Link></b></span>
         </form>
       </div>
   </div>

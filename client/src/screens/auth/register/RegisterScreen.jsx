@@ -35,7 +35,7 @@ const RegisterScreen = ({history,handlePopUp2,closeform}) => {
 
     try{
        const {data}= await axios.post("/api/auth/register",{username,email,password},config);
-       localStorage.setItem("authToken",data.token)
+       localStorage.setItem("userRegistrationStatus",data.success)
        history.push("/")
     }catch(error){
       setError(error.response.data.error)
@@ -77,7 +77,6 @@ const RegisterScreen = ({history,handlePopUp2,closeform}) => {
                 <span></span>
                 Submit
               </button>
-              <span className="register-subtext">Already have an account? <b className="register-link" ><Link to='/login' className="link">Login</Link></b></span>
               </div>
           </form>
         </div>

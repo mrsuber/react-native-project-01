@@ -1,5 +1,11 @@
 import {useState,useEffect} from 'react'
 import axios from 'axios'
+import img1 from '../../images/me.webp'
+import {Sidebar,Topbar,Card,RecentUsers,RecentInfoInput} from '../../components'
+
+import './PrivateScreen.css'
+
+
 
 const PrivateScreen = ({history}) => {
   const [error,setError] =useState("")
@@ -31,16 +37,25 @@ const PrivateScreen = ({history}) => {
     fetchPrivateData()
   },[history])
 
-  const logoutHandler=()=>{
-    localStorage.removeItem("authToken")
-    history.push("/login")
-  }
+
   return (
     error? <span className="error-message">{error}</span>
     :
     <>
-      <div style={{background:"green", color:"white"}}>PrivateData:{privateData}</div>
-      <button onClick={logoutHandler}>Logout</button>
+    <Sidebar  />
+    <div className="admin__main">
+        <Topbar />
+
+        <Card/>
+          <div className="admin__details">
+            <RecentInfoInput />
+            <RecentUsers img1={img1} />
+
+          </div>
+        </div>
+    {/*<div style={{background:"green", color:"white"}}>PrivateData:{privateData}</div>
+    <button onClick={logoutHandler}>Logout</button>*/}
+
     </>
 
   )
