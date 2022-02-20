@@ -26,6 +26,7 @@ const bodyParser=require('body-parser')
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/uploads',express.static(path.join(__dirname,'uploads')))
+
 const fileSizeFormatter= (bytes,decimal) =>{
   if(bytes===0){
     return '0 Bytes'
@@ -59,7 +60,7 @@ app.use('/api/upload',upload.single("file"),(req,res)=>{
 // end file upload
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/private',require('./routes/private'))
-
+app.use('/api/fileupload', require('./routes/file-upload-routes'))
 
 if(process.env.NODE_ENV==="production"){
   app.use(express.static(path.join(__dirname,'/client/build')))
