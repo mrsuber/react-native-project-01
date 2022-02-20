@@ -80,8 +80,8 @@ passport1,
 
 
 
-         <CustomButton text="Confirm" onPress={runAddInfo}/>
-         <CustomButton text="Cancel" onPress={() => changeModalVisibility(false)}/>
+         <CustomButton text="Confirm" onPress={runAddInfo} fgColor="#f0932a"/>
+         <CustomButton text="Cancel" onPress={() => changeModalVisibility(false)} fgColor="#f0932a"/>
 
          </ScrollView>
        </View>

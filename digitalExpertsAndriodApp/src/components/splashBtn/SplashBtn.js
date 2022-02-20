@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 
   text_TERTIARY: {
     color:'white',
-    backgroundColor:'#130f40bd',
+    backgroundColor:'#010101',
     padding:15,
     borderRadius:15,
 

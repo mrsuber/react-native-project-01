@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image,useWindowDimensions} from 'react-native';
-import Logo from '../../../assets/images/logo.png'
+import Logo from '../../../assets/images/mainlogo.jpeg'
 import {SplashBtn} from '../../components'
 import {useNavigation} from '@react-navigation/native'
 
@@ -19,7 +19,7 @@ const SplashScreen = () => {
         style={[styles.logo, {height: height * 0.3}]}
         resizeMode="contain"
       />
-      <SplashBtn text="Get Started" onPress={onSignInPressed} type="TERTIARY" />
+      <SplashBtn text="Get Started" onPress={onSignInPressed} type="TERTIARY" fgColor="#f0932a" />
     </View>
   );
 };
@@ -32,10 +32,11 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
   },
   logo:{
-    width: '40%',
+    width: '30%',
     maxWidth: 500,
     maxHeight: 200,
     marginVertical: 30,
+    borderRadius: 100 / 2,
   },
 });
 export default SplashScreen;

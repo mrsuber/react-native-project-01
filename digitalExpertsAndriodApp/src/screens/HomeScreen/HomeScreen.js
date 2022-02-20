@@ -63,7 +63,7 @@ const data = [
 const HomeScreen = () => {
   const [infos, setInfos] = useState(data);
   const [loading, setLoading] = useState(false)
-  // const [detail, setDetail] = useState([])
+  const [detail, setDetail] = useState([])
   const navigation = useNavigation();
 
   const deleteItem = id => {
@@ -189,6 +189,8 @@ const HomeScreen = () => {
     const getData = async () => {
   try {
         const value = await AsyncStorage.getItem('authToken');
+          const userInfo = await AsyncStorage.getItem('username');
+        setDetail(userInfo);
         if (value !== '' && value !== null) {
           // value previously stored
 
@@ -208,16 +210,16 @@ const HomeScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
-        <Header title= 'Wellcome to Digital Experts' />
+        <Header title= {`Wellcome ${detail}`} />
         <DetailInputScreen addInfo={addInfo2}/>
-        {infos.map((info, index) => (
+        {/*infos.map((info, index) => (
           <ListItem
             info={info}
             key={index}
             deleteItem={deleteItem}
             detailsInputScreen={detailsInputScreen}
           />
-      ))}
+      ))*/}
     </View>
       {
         loading

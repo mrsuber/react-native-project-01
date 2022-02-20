@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
   title:{
     fontSize:24,
     fontWeight:'bold',
-    color:'#051c60',
+    color:'#f0932a',
     margin:10,
   },
   text:{
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
   },
   btn:{
     width:'100%',
-    backgroundColor:'#130f40bd',
+    backgroundColor:'#010101',
     padding:9,
     margin:5,
     borderRadius:10,
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
 
   },
   btnText:{
-    color:'white',
+    color:'#f0932a',
     fontSize:20,
     textAlign:'center',
   },
