@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTable,faHome,faUsers,faLock,faSignOutAlt,faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom'
+import logo from '../../../images/mainlogo.jpeg'
 import './Sidebar.css'
 
 const Sidebar = ({history}) => {
@@ -17,9 +18,9 @@ const Sidebar = ({history}) => {
       <div className="admin__container">
         <div className="admin__navigation">
           <ul>
-            <li>
+            <li className="logoTitle">
             <Link to="/" className="link">
-              <span className="admin__icon"></span>
+              <span className="admin__icon"><img src={logo} alt="digital experts" className="logo"/></span>
               <span className="admin__title"><h2>Digital Experts</h2></span>
               </Link>
             </li>

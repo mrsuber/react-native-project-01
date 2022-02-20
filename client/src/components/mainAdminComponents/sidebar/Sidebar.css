@@ -17,7 +17,7 @@
   position: fixed;
   width: 300px;
   height: 100%;
-  background: #003147;
+  background: #010101;
   transition: 0.5s;
   overflow: hidden;
 }
@@ -39,7 +39,7 @@
 }
 
 .admin__navigation ul li:hover{
-  background: #03a9f4;
+  background: #1e496b;
 }
 
 .admin__navigation ul li:nth-child(1):hover{
@@ -52,7 +52,7 @@
  width: 100%;
  display: flex;
  text-decoration: none;
- color:#fff;
+ color:#f1962f;
 }
 
 .admin__navigation ul li a .admin__icon{
@@ -64,7 +64,7 @@
   text-align: center;
 }
 .admin__navigation ul li a .admin__icon svg{
-  color:#fff;
+  color:#f1962f;
   font-size: 24px;
 }
 
@@ -75,4 +75,15 @@ padding: 0 10px;
 height: 60px;
 line-height: 60px;
 white-space: nowrap;
+}
+
+.logo{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #f1962f;
+  object-fit: contain;
+}
+.logoTitle{
+  border-bottom: 1px solid #f1962f;
 }
