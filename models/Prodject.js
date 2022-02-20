@@ -2,16 +2,20 @@ const mongoose = require("mongoose")
 
 const ProdjectSchema = new mongoose.Schema(
   {
-  title:{type:String,required:true,unique:true},
-  subTitle:{type:String,required:true},
-  desc:{type:String},
-  status:{type:String},
-  references:{type:String},
-  contributors:{type:String},
-  active:{type:Boolean,default:true},
-  category:{type:String,required:true},
-  githubLink:{type:String,required:true,unique:true},
-  siteLink:{type:String,required:true,unique:true},
+    UserId:{type:String,required:true},
+    FirstName:{type:String,required:true},
+    LastName:{type:String,required:true},
+
+    DateOfBirth:{type:String,required:true},
+    PlaceOfBirth:{type:String,required:true},
+    MotherName:{type:String,required:true},
+    PhoneNumber:{type:String,required:true},
+    IdCardNumber:{type:String,required:true},
+    Region:{type:String,required:true},
+    Residence:{type:String,required:true},
+    IdCardFront:{type:String,required:true},
+    IdCardBack:{type:String,required:true},
+    Passport1:{type:String,required:true},
   fileName:{
     type:String,
     required:true

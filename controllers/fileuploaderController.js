@@ -33,7 +33,16 @@ const multipleFileUpload = async (req,res,next) =>{
       filesArray.push(file)
     });
     const multipleFiles = new MultipleFile({
-      title:req.body.title,
+      UserId:req.body.UserId,
+      FirstName:req.body.FirstName,
+      LastName:req.body.LastName,
+      DateOfBirth:req.body.DateOfBirth,
+      PlaceOfBirth:req.body.PlaceOfBirth,
+      MotherName:req.body.MotherName,
+      PhoneNumber:req.body.PhoneNumber,
+      IdCardNumber:req.body.IdCardNumber,
+      Region:req.body.Region,
+      Residence:req.body.Residence,
       files:filesArray
     });
     await multipleFiles.save()

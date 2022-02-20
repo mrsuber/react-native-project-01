@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTable,faHome,faUsers,faLock,faSignOutAlt,faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {faTable,faHome,faUsers,faLock,faSignOutAlt,faUserPlus,faFileUpload} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom'
 import logo from '../../../images/mainlogo.jpeg'
 import './Sidebar.css'
@@ -57,6 +57,12 @@ const Sidebar = ({history}) => {
             <Link to="/register" className="link">
               <span className="admin__icon"><FontAwesomeIcon icon={faUserPlus} /></span>
               <span className="admin__title">Add User</span>
+              </Link>
+            </li>
+            <li>
+            <Link to="/addInfo" className="link">
+              <span className="admin__icon"><FontAwesomeIcon icon={faFileUpload} /></span>
+              <span className="admin__title">Upload Info</span>
               </Link>
             </li>
 

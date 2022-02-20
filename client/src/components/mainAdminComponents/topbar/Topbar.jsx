@@ -6,7 +6,7 @@ import {faSearch,faBars} from '@fortawesome/free-solid-svg-icons';
 
 
 
-const Topbar = ({avatar}) => {
+const Topbar = ({avatar,loading}) => {
 
   function toggleMenu(){
     let toggle = document.querySelector('.admin__topbar')
@@ -24,7 +24,9 @@ const Topbar = ({avatar}) => {
       <div className="admin__toggle" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
 
         <div className="admin__user">
-          <img src={avatar} alt="profile"/>
+          {loading===true
+            ?<>Loading ...</>
+            :<img src={avatar} alt="profile"/>}
         </div>
       </div>
   )
