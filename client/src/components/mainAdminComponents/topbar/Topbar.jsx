@@ -1,12 +1,12 @@
 import React from 'react'
 import './Topbar.css'
-import img1 from '../../../images/me.webp'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSearch,faBars} from '@fortawesome/free-solid-svg-icons';
 
 
 
-const Topbar = () => {
+const Topbar = ({avatar}) => {
 
   function toggleMenu(){
     let toggle = document.querySelector('.admin__topbar')
@@ -22,9 +22,9 @@ const Topbar = () => {
   return (
     <div className="admin__topbar">
       <div className="admin__toggle" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
-        
+
         <div className="admin__user">
-          <img src={img1} alt="profile"/>
+          <img src={avatar} alt="profile"/>
         </div>
       </div>
   )

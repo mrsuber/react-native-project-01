@@ -9,13 +9,15 @@ import './PrivateScreen.css'
 
 const PrivateScreen = ({history}) => {
   const [error,setError] =useState("")
-  const [privateData,setPrivateData]=useState("");
+  const [userInfo,setUserInfo]=useState([]);
 
   useEffect(()=>{
     if(!localStorage.getItem("authToken")){
       history.push("/login")
     }
-    const fetchPrivateData = async () =>{
+
+    const fetchUserInfo = async () =>{
+      const id = localStorage.getItem("someRandomNumber")
       const config = {
         headers:{
           "Content-Type":"application/json",
@@ -23,9 +25,9 @@ const PrivateScreen = ({history}) => {
         }
       }
       try{
-        const {data} = await axios.get("/api/private",config)
+        const {data} = await axios.get(`/api/private/finduser/${id}`,config)
 
-        setPrivateData(data.data)
+        setUserInfo(data.data)
 
       }catch(error){
 
@@ -34,17 +36,17 @@ const PrivateScreen = ({history}) => {
       }
     }
 
-    fetchPrivateData()
+    fetchUserInfo()
   },[history])
-
-
+  console.log(userInfo)
+  if(userInfo.length===0)return<>Loading ...</>
   return (
     error? <span className="error-message">{error}</span>
     :
     <>
     <Sidebar  />
     <div className="admin__main">
-        <Topbar />
+        <Topbar avatar={userInfo.profilePic}/>
 
         <Card/>
           <div className="admin__details">
