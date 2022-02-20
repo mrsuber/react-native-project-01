@@ -32,7 +32,7 @@ const ConfirmEmailScreen = ({token,setToken}) => {
           placeholder="Enter Your Email"
         />
 
-        <CustomButton text="Send" onPress={onSendPressed} />
+        <CustomButton text="Send" onPress={onSendPressed} fgColor="#f0932a"/>
 
         <CustomButton
           text="Back to Sign in"

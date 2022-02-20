@@ -31,7 +31,7 @@ const NewPasswordScreen = ({token,setToken}) => {
           placeholder="Enter New Password"
           secureTextEntry={true}
         />
-        <CustomButton text="Submit" onPress={onSubmitPressed} />
+        <CustomButton text="Submit" onPress={onSubmitPressed} fgColor="#f0932a"/>
 
         <CustomButton
           text="Back to Sign in"

@@ -9,7 +9,7 @@ import {
   Alert,
   ActivityIndicator
 } from 'react-native';
-import Logo from '../../../assets/images/logo.png'
+import Logo from '../../../assets/images/mainlogo.jpeg'
 import axios from 'axios'
 import {CustomInput, CustomButton, SocialSignInButton} from '../../components';
 import {useNavigation} from '@react-navigation/native';
@@ -55,6 +55,8 @@ const SignInScreen = () => {
 
         try {
           await AsyncStorage.setItem('authToken', data.token);
+          await AsyncStorage.setItem('username', data.user.username);
+          await AsyncStorage.setItem('userId', data.user._id);
           navigation.navigate('Home');
           setLoading(false)
         } catch (error) {
@@ -127,8 +129,8 @@ const SignInScreen = () => {
           secureTextEntry={true}
         />
         { loading
-          ?<CustomButton text="Submiting ..." />
-          :<CustomButton text="Sign In" onPress={onSignInPressed} />}
+          ?<CustomButton text="Submiting ..." fgColor="#f0932a"/>
+          :<CustomButton text="Sign In" onPress={onSignInPressed} fgColor="#f0932a"/>}
 
         <CustomButton
           text="Forgot password?"
@@ -138,7 +140,7 @@ const SignInScreen = () => {
 
         <SocialSignInButton />
 
-        
+
       </View>
     </ScrollView>
   )
@@ -150,8 +152,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logo: {
-    width: '50%',
-
+    width: '20%',
+    borderRadius:100 / 2,
     maxWidth: 500,
     maxHeight: 200,
   },
