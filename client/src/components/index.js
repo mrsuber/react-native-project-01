@@ -1,9 +1,11 @@
-//Routing
-export {default as PrivateRoute} from './routing/PrivateRoute';
+// exporting main admin components
 
-// Screens
-export {default as PrivateScreen} from './screens/PrivateScreen';
-export {default as LoginScreen} from './screens/auth/login/LoginScreen';
-export {default as RegisterScreen} from './screens/auth/register/RegisterScreen';
-export {default as ForgotPasswordScreen} from './screens/auth/forgotpassword/ForgotPasswordScreen';
-export {default as ResetPasswordScreen} from './screens/auth/resetpassword/ResetPasswordScreen';
+export {default as Card} from './mainAdminComponents/card/Card'
+export {default as Sidebar} from './mainAdminComponents/sidebar/Sidebar'
+export {default as Topbar} from './mainAdminComponents/topbar/Topbar'
+export {default as RecentUsers} from './mainAdminComponents/recentUsers/RecentUsers'
+export {default as RecentInfoInput} from './mainAdminComponents/recentInfoInput/RecentInfoInput'
+export {default as Toast} from './toast/Toast'
+// export {default as Table} from './mainAdminComponents/table/Table'
+// export {default as Pagination} from './mainAdminComponents/pagination/Pagination'
+// export {default as Posts} from './mainAdminComponents/posts/Posts'

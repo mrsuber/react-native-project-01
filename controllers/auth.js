@@ -119,5 +119,5 @@ exports.resetpassword= async (req,res,next)=>{
 
 const sendToken = (user,statusCode,res) =>{
   const token = user.getSignedToken()
-  res.status(statusCode).json({success:true,token,user:user})
+  res.status(statusCode).json({success:true,token,userId:user._id, username:user.username})
 }
