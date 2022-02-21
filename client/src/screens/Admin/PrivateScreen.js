@@ -63,7 +63,7 @@ const PrivateScreen = ({history}) => {
     fetchUserInfo()
   },[history,userInfo.isAdmin])
 
-  console.log(allUsers)
+
   let infoCount=1
   let userCount=allUsers.length
   let increase=allUsers.length
@@ -73,7 +73,7 @@ const PrivateScreen = ({history}) => {
     error? <span className="error-message">{error}</span>
     :
     <>
-    <Sidebar  />
+    <Sidebar history={history} />
     <div className="admin__main">
         {userInfo
           ?<Topbar avatar={userInfo.profilePic} loading={false}/>
