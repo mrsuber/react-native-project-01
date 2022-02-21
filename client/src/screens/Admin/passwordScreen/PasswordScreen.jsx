@@ -18,10 +18,14 @@ const PasswordScreen = ({history}) => {
 
     e.preventDefault()
     const config = {
-      header:{
-        "Content-Type":"application/json"
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${localStorage.getItem("authToken")}`
+
       }
     }
+    const id = localStorage.getItem("someRandomNumber")
+
     if(password!==confirmpassword){
       setPassword("")
       setConfirmpassword("")
@@ -32,7 +36,7 @@ const PasswordScreen = ({history}) => {
     }
 
     try{
-       const {data}= await axios.post("/api/auth/register",{username,email,password},config);
+       const {data}= await axios.put(`/api/private/updateuser/${id}`,{username,email,password},config);
        localStorage.setItem("userRegistrationStatus",data.success)
        history.push("/")
     }catch(error){

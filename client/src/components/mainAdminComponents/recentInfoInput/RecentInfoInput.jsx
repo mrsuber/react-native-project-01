@@ -1,6 +1,27 @@
-import React from 'react'
-
+import React,{useEffect,useState} from 'react'
+import axios from 'axios'
 const RecentInfoInput = () => {
+  const [info, setInfo] = useState([])
+  useEffect(()=>{
+    const getInfo = async () =>{
+      const config = {
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem("authToken")}`
+
+        }
+      }
+      try{
+        const res= await axios.get("/api/fileupload/getallMultipleFiles",config);
+        setInfo(res.data)
+      }catch(error){}
+    }
+
+
+    getInfo()
+  },[])
+
+
   return (
     <div className="admin__recentOrder">
       <div className="admin__cardHeader">
@@ -8,74 +29,33 @@ const RecentInfoInput = () => {
         <a href="#" className="admin__btn">View all</a>
       </div>
       <table>
+
         <thead>
           <tr>
             <td>FirstName</td>
             <td>LastName</td>
             <td>Region</td>
             <td>Residence</td>
-            
+
+
 
 
 
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Star Refrigerator</td>
-            <td>$1200</td>
-            <td>Paid</td>
-            <td><span className="admin__status admin__delivered">Delivered</span></td>
-          </tr>
-          <tr>
-            <td>Window Coolers</td>
-            <td>$120</td>
-            <td>Due</td>
-            <td><span className="admin__status admin__pending">pending</span></td>
-          </tr>
-          <tr>
-            <td>Speakers</td>
-            <td>$600</td>
-            <td>Paid</td>
-            <td><span className="admin__status admin__return">Return</span></td>
-          </tr>
-          <tr>
-            <td>Hp Laptop</td>
-            <td>$6000</td>
-            <td>Due</td>
-            <td><span className="admin__status admin__inporgress">In Progress</span></td>
-          </tr>
+        {
+          info.slice(0, 10).reverse().map((item,index)=>(
+            <tr key={index}>
+              <td>{item.FirstName}</td>
+              <td>{item.LastName}</td>
+              <td>{item.Region}</td>
+              <td>{item.Residence}</td>
+            </tr>
 
-          <tr>
-            <td>Star Refrigerator</td>
-            <td>$1200</td>
-            <td>Paid</td>
-            <td><span className="admin__status admin__delivered">Delivered</span></td>
-          </tr>
-          <tr>
-            <td>Window Coolers</td>
-            <td>$120</td>
-            <td>Due</td>
-            <td><span className="admin__status admin__pending">pending</span></td>
-          </tr>
-          <tr>
-            <td>Speakers</td>
-            <td>$600</td>
-            <td>Paid</td>
-            <td><span className="admin__status admin__return">Return</span></td>
-          </tr>
-          <tr>
-            <td>Hp Laptop</td>
-            <td>$6000</td>
-            <td>Due</td>
-            <td><span className="admin__status admin__inporgress">In Progress</span></td>
-          </tr>
-          <tr>
-            <td>Apple Watch</td>
-            <td>$600</td>
-            <td>paid</td>
-            <td><span className="admin__status admin__delivered">Delivered</span></td>
-          </tr>
+          ))
+        }
+
         </tbody>
       </table>
     </div>

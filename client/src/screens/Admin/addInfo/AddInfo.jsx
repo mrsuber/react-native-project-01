@@ -75,8 +75,10 @@ const AddInfo = ({history,changeModalVisibility,setData,selectRegion=false,selec
 const registerHandler = async(e)=>{
   e.preventDefault()
   const config = {
-    header:{
-      "Content-Type":"application/json"
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:`Bearer ${localStorage.getItem("authToken")}`
+
     }
   }
   const id = localStorage.getItem("someRandomNumber")

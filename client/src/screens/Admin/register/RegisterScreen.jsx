@@ -48,7 +48,7 @@ const RegisterScreen = ({history}) => {
   return (
 
     <>
-    <Sidebar  />
+    <Sidebar history={history} />
     <div className="admin__main">
         <Topbar />
 
