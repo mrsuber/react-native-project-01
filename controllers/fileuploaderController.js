@@ -21,9 +21,52 @@ const singleFileUpload = async (req,res,next) =>{
 }
 
 const multipleFileUpload = async (req,res,next) =>{
+
+  if(!req.body.id){
+    return res.status(400).json({msg:"please upload user id"})
+
+  }
+if(!req.body.firstName){
+  return res.status(400).json({msg:"please enter first name"})
+
+}
+if(!req.body.lastName){
+  return res.status(400).json({msg:"please enter last name"})
+
+}
+if(!req.body.dateOfBirth){
+  return res.status(400).json({msg:"please enter date of birth"})
+
+}
+if(!req.body.placeOfBirth){
+  return res.status(400).json({msg:"please place of birth"})
+
+}
+if(!req.body.motherName){
+  return res.status(400).json({msg:"please enter mother name"})
+
+}
+if(!req.body.phoneNumber){
+  return res.status(400).json({msg:"please Phone number"})
+
+}
+if(!req.body.idCardNumber){
+  return res.status(400).json({msg:"please id card number"})
+
+}
+if(!req.body.region){
+  return res.status(400).json({msg:"please enter region"})
+
+}
+if(!req.body.residence){
+  return res.status(400).json({msg:"please residence"})
+
+}
   try{
     let filesArray =[]
+    let count = 0
     req.files.forEach(element =>{
+      count = count+1
       const file = {
         fileName:element.originalname,
         filePath:element.path,
@@ -31,22 +74,32 @@ const multipleFileUpload = async (req,res,next) =>{
         fileSize:fileSizeFormatter(element.size,2)
       }
       filesArray.push(file)
+
+
     });
+    if(count===0){
+      return res.status(400).json({msg:"please upload files"})
+    }
+    if(count!==3){
+      return res.status(400).json({msg:"please upload all files"})
+    }
+
     const multipleFiles = new MultipleFile({
-      UserId:req.body.UserId,
-      FirstName:req.body.FirstName,
-      LastName:req.body.LastName,
-      DateOfBirth:req.body.DateOfBirth,
-      PlaceOfBirth:req.body.PlaceOfBirth,
-      MotherName:req.body.MotherName,
-      PhoneNumber:req.body.PhoneNumber,
-      IdCardNumber:req.body.IdCardNumber,
-      Region:req.body.Region,
-      Residence:req.body.Residence,
+
+      UserId:req.body.id,
+      FirstName:req.body.firstName,
+      LastName:req.body.lastName,
+      DateOfBirth:req.body.dateOfBirth,
+      PlaceOfBirth:req.body.placeOfBirth,
+      MotherName:req.body.motherName,
+      PhoneNumber:req.body.phoneNumber,
+      IdCardNumber:req.body.idCardNumber,
+      Region:req.body.region,
+      Residence:req.body.residence,
       files:filesArray
     });
     await multipleFiles.save()
-    res.status(201).send('Files Uploaded Successfully')
+    res.status(201).json({msg:'success'})
   }catch(error){
     res.status(400).send(error.message)
   }

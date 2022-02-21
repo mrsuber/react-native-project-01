@@ -24,6 +24,7 @@ const AddInfo = ({history,changeModalVisibility,setData,selectRegion=false,selec
   const [idCardFront,setIdCardFront]=useState('')
   const [idCardBack,setIdCardBack]=useState('')
   const [passport1,setPassport1] = useState('')
+  const [files,setFiles] = useState('')
   const [error,setError]=useState('')
   const [townData, setTownData] =useState([])
   const [townDataArray, setTownDataArray] =useState([])
@@ -71,9 +72,45 @@ const AddInfo = ({history,changeModalVisibility,setData,selectRegion=false,selec
   // }
 
 
-const registerHandler =()=>{
+const registerHandler = async(e)=>{
+  e.preventDefault()
+  const config = {
+    header:{
+      "Content-Type":"application/json"
+    }
+  }
+  const id = localStorage.getItem("someRandomNumber")
+
+
+
+  try{
+    const formData = new FormData();
+    formData.append('id',id)
+    formData.append('firstName',firstName)
+    formData.append('lastName',lastName)
+    formData.append('dateOfBirth',dateOfBirth)
+    formData.append('placeOfBirth',placeOfBirth)
+    formData.append('motherName',motherName)
+    formData.append('phoneNumber',phoneNumber)
+    formData.append('idCardNumber',idCardNumber)
+    formData.append('region',region)
+    formData.append('residence',residence)
+    formData.append('files',idCardFront)
+    formData.append('files',idCardBack)
+    formData.append('files',passport1)
+
+     const res= await axios.post("/api/fileupload/multipleFiles",formData,config);
+     console.log(res)
+     history.push("/")
+  }catch(error){
+    setError(error.response.data.error)
+      setTimeout(()=>{
+        setError("")
+      },5000)
+  }
 
 }
+
 
 const getState =(regionName)=>{
   setRegion(regionName)
@@ -93,10 +130,26 @@ useEffect(()=>{
   }
 
   setTownData(town)
-  setTownDataArray(townData[Object.keys(townData)[0]])
-},[region,townData])
 
-  console.log(residence)
+},[region])
+
+useEffect(()=>{
+  if(townData){
+    setTownDataArray(townData[Object.keys(townData)[0]])
+  }
+},[townData])
+
+useEffect(()=>{
+  let fileList ={}
+  fileList[0]=idCardFront
+  fileList[1]=idCardBack
+  fileList[2]=passport1
+  setFiles(fileList)
+},[idCardFront,
+idCardBack,
+passport1])
+
+
   return (
 
     <>
@@ -166,17 +219,17 @@ useEffect(()=>{
                 </div>
 
                 <div class="user-box">
-                    <input type="file" name="idcardfront" id="idcardfront"required="" />
+                    <input type="file" name="idcardfront" id="idcardfront"  onChange={(e)=>setIdCardFront(e.target.files[0])} />
                     <label htmlFor="idcardfront">Id card Front Image</label>
                 </div>
 
                 <div class="user-box">
-                    <input type="file" name="idcardback" id="idcardback"required="" />
+                    <input type="file" name="idcardback" id="idcardback"onChange={(e)=>setIdCardBack(e.target.files[0])} />
                     <label htmlFor="idcardback">Id card Back Image</label>
                 </div>
 
                 <div class="user-box">
-                    <input type="file" name="idcardback" id="idcardback"required="" />
+                    <input type="file" name="idcardback" id="idcardback"onChange={(e)=>setPassport1(e.target.files[0])} />
                     <label htmlFor="idcardback">Passport Image</label>
                 </div>
 
