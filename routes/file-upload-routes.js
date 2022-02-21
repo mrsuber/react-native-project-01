@@ -7,7 +7,7 @@ const {singleFileUpload,multipleFileUpload,getallSingleFiles,getallMultipleFiles
 const router = express.Router();
 
 router.post('/singleFile',upload.single('file'),protect,singleFileUpload);
-router.post('/multipleFiles',upload.array('files'),multipleFileUpload);
+router.post('/multipleFiles',upload.array('files'),protect,multipleFileUpload);
 router.get('/getallSingleFiles',protect,isAdmin,getallSingleFiles)
 router.get('/getallMultipleFiles',getallMultipleFiles)
 

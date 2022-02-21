@@ -64,6 +64,7 @@ const HomeScreen = () => {
   const [infos, setInfos] = useState(data);
   const [loading, setLoading] = useState(false)
   const [detail, setDetail] = useState([])
+  const [userID,setUserID] = useState('')
   const navigation = useNavigation();
 
   const deleteItem = id => {
@@ -113,43 +114,46 @@ const HomeScreen = () => {
   );
   };
 
-  const addInfo = info =>{
+  const addInfo = async (info) =>{
+    try {
+          const value = await AsyncStorage.getItem('authToken');
 
-        Alert.alert(
-          `Details of ${info.FirstName} ${info.LastName}`,
-          `Date of birth ${info.DateOfBirth},
-          Place of birth ${info.PlaceOfBirth},
-          Mothers Name ${info.MotherName},
-          Phone number ${info.PhoneNumber},
-          ID card nuber ${info.IdCardNumber},
-          Region ${info.Region},
-          Residence ${info.Residence}`,
+            const userId = await AsyncStorage.getItem('userId');
 
-          [
-            {
-              text: 'Back',
+          if (value !== '' && value !== null) {
+            // value previously stored
 
-              style: 'cancel',
-            },
-          {
-            text: 'Confirm',
-              onPress: () => addInfo2(info),
-              style: 'cancel',
-            },
-          ],
-          {
-            cancelable: true,
-            onDismiss: () =>
-              Alert.alert(
-                'This alert was dismissed by tapping outside of the alert dialog.',
-              ),
-          },
-      );
+            let info2 = {
+              id:userId,
+              FirstName: info.FirstName,
+              LastName: info.LastName,
+              DateOfBirth: info.DateOfBirth,
+              PlaceOfBirth:info.PlaceOfBirth,
+              MotherName:info.MotherName,
+              PhoneNumber:info.PhoneNumber,
+              IdCardNumber:info.IdCardNumber,
+              Region:info.Region,
+              Residence: info.Residence,
+              IdCardFront:info.IdCardFront,
+              IdCardBack:info.IdCardBack,
+              Passport1: info.Passport1,
+            }
+            console.log(info2)
+          } else {
+          navigation.navigate('SignIn');
+          }
+        } catch (e) {
+      // error reading value
+    }
+
+
+
   }
   const addInfo2 = info => {
     const images2 = imageUpload(info.Images)
     // console.log(images2)
     console.warn(images2)
+
     setInfos(prevInfo =>{
       return [
         {
@@ -173,16 +177,11 @@ const HomeScreen = () => {
   }
 
   const onLogOutPress = async () =>{
-    try {
-      setLoading(true)
-      await AsyncStorage.setItem('authToken', '');
-      navigation.navigate('SignIn');
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      Alert.alert("Error","An error ocured during log out, try again")
-      // saving error
-    }
+    AsyncStorage.getAllKeys()
+        .then(keys => AsyncStorage.multiRemove(keys))
+        .then(() => alert('logout success'));
+          navigation.navigate('SignIn');
+
   };
 
   useEffect(() => {
@@ -190,7 +189,9 @@ const HomeScreen = () => {
   try {
         const value = await AsyncStorage.getItem('authToken');
           const userInfo = await AsyncStorage.getItem('username');
+          const userId = await AsyncStorage.getItem('userId');
         setDetail(userInfo);
+        setUserID(userId)
         if (value !== '' && value !== null) {
           // value previously stored
 
@@ -211,7 +212,7 @@ const HomeScreen = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
         <Header title= {`Wellcome ${detail}`} />
-        <DetailInputScreen addInfo={addInfo2}/>
+        <DetailInputScreen addInfo={addInfo} userId={userID}/>
         {/*infos.map((info, index) => (
           <ListItem
             info={info}

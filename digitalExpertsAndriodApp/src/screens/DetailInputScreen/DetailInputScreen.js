@@ -26,7 +26,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 Icon.loadFont();
 //
 
-const DetailInputScreen = ({addInfo}) => {
+const DetailInputScreen = ({addInfo, userId,loading}) => {
 
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
@@ -70,7 +70,7 @@ const DetailInputScreen = ({addInfo}) => {
 }
 
   const obj = {
-    id:guid(),
+    id:userId,
     FirstName: firstName,
     LastName: lastName,
     DateOfBirth: dateOfBirth,
@@ -125,7 +125,7 @@ const DetailInputScreen = ({addInfo}) => {
       height:400,
       cropping:true,
     }).then(image => {
-      setPassport1(image.path)
+      setPassport1(image)
     })
   }
 
@@ -135,7 +135,7 @@ const DetailInputScreen = ({addInfo}) => {
       height:400,
       cropping:true,
     }).then(image => {
-      setPassport1(image.path)
+      setPassport1(image)
     })
   }
 
@@ -148,7 +148,7 @@ const DetailInputScreen = ({addInfo}) => {
     }).then(image => {
       // console.log("front image",image)
       // console.warn(image.path);
-      setIdCardFront(image.path)
+      setIdCardFront(image)
 
 
 
@@ -161,7 +161,7 @@ const DetailInputScreen = ({addInfo}) => {
       height:400,
       cropping:true,
     }).then(image => {
-      setIdCardFront(image.path)
+      setIdCardFront(image)
     })
   }
 
@@ -171,7 +171,7 @@ const DetailInputScreen = ({addInfo}) => {
       height:400,
       cropping:true,
     }).then(image => {
-      setIdCardBack(image.path)
+      setIdCardBack(image)
     })
   }
 
@@ -181,7 +181,7 @@ const DetailInputScreen = ({addInfo}) => {
       height:400,
       cropping:true,
     }).then(image => {
-      setIdCardBack(image.path)
+      setIdCardBack(image)
     })
   }
 
@@ -323,7 +323,7 @@ const DetailInputScreen = ({addInfo}) => {
             <Text style={styles.btnCardText}>{'    '}Id Card Front</Text>
           </View>
         : <Image
-          source={{uri:idCardFront}}
+          source={{uri:idCardFront.path}}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -336,7 +336,7 @@ const DetailInputScreen = ({addInfo}) => {
             <Icon name="camera" size={20} color="#ff7800" />{'    '} Id Card Back
           </Text>
           :<Image
-            source={{uri:idCardBack}}
+            source={{uri:idCardBack.path}}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -352,7 +352,7 @@ const DetailInputScreen = ({addInfo}) => {
             <Icon name="camera" size={20} color="#ff7800" />{'    '}Passport Photo1
           </Text>
           :<Image
-            source={{uri:passport1}}
+            source={{uri:passport1.path}}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -360,11 +360,17 @@ const DetailInputScreen = ({addInfo}) => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.btn} onPress={onInfoSubmitPressed}>
+        {loading
+          ?<TouchableOpacity style={styles.btn} onPress={onInfoSubmitPressed}>
+          <Text style={styles.btnText}>
+            <Icon name="plus" size={20} color="#ff7800" />{'  '} Submiting ...
+          </Text>
+        </TouchableOpacity>
+          :<TouchableOpacity style={styles.btn} onPress={onInfoSubmitPressed}>
           <Text style={styles.btnText}>
             <Icon name="plus" size={20} color="#ff7800" />{'  '} Add Info
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         <Modal
           transparent={true}
             animationType="fade"

@@ -54,7 +54,7 @@ passport1,
          <View style={styles.imageContainer}>
           <Text>{'Front ID Card Image'}</Text>
           <Image
-            source={{uri:idCardFront}}
+            source={{uri:idCardFront.path}}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -63,7 +63,7 @@ passport1,
          <View style={styles.imageContainer}>
           <Text>{'Back ID Card Image'}</Text>
           <Image
-            source={{uri:idCardBack}}
+            source={{uri:idCardBack.path}}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -72,7 +72,7 @@ passport1,
          <View style={styles.imageContainer}>
           <Text>{'Passport Image'}</Text>
           <Image
-            source={{uri:passport1}}
+            source={{uri:passport1.path}}
             style={styles.logo}
             resizeMode="contain"
           />
