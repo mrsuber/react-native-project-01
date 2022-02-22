@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom'
 import {db} from '../../../data/data'
 import './AddInfo.css'
 import axios from 'axios'
-
+import {checkImage, imageUpload} from '../../../utils/imageUpload'
 const OPTIONS= db.states
 
 const AddInfo = ({history,changeModalVisibility,setData,selectRegion=false,selectRecident=false}) => {
@@ -82,27 +82,40 @@ const registerHandler = async(e)=>{
     }
   }
   const id = localStorage.getItem("someRandomNumber")
+  const err1 = checkImage(idCardFront)
+  const err2 = checkImage(idCardBack)
+  const err3 = checkImage(passport1)
+  if (err1) {
+    console.log(err1);
 
-
+  }
+  if (err2) {
+    console.log(err1);
+  }
+  if (err3) {
+    console.log(err1);
+  }
 
   try{
-    const formData = new FormData();
-    formData.append('id',id)
-    formData.append('firstName',firstName)
-    formData.append('lastName',lastName)
-    formData.append('dateOfBirth',dateOfBirth)
-    formData.append('placeOfBirth',placeOfBirth)
-    formData.append('motherName',motherName)
-    formData.append('phoneNumber',phoneNumber)
-    formData.append('idCardNumber',idCardNumber)
-    formData.append('region',region)
-    formData.append('residence',residence)
-    formData.append('files',idCardFront)
-    formData.append('files',idCardBack)
-    formData.append('files',passport1)
+  const images = await imageUpload([idCardFront, idCardBack, passport1]);
 
-     const res= await axios.post("/api/fileupload/multipleFiles",formData,config);
-     console.log(res)
+
+  let data={
+    UserId: id,
+    FirstName: firstName,
+    LastName: lastName,
+    DateOfBirth: dateOfBirth,
+    PlaceOfBirth: placeOfBirth,
+    MotherName: motherName,
+    PhoneNumber: phoneNumber,
+    IdCardNumber: idCardNumber,
+    Region: region,
+    Residence: residence,
+    Images: images,
+  }
+
+     const res= await axios.post("/api/private/createnewprodject",data,config);
+
      history.push("/")
   }catch(error){
     setError(error.response.data.error)

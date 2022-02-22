@@ -19,6 +19,7 @@ import {
 } from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import {DetailInputScreen} from '../../screens'
+import {checkImage,imageUpload} from '../../imageUpload/imageUpload'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
@@ -115,6 +116,49 @@ const SignInScreen = () => {
     setUserName('')
     setLogin(true)
   }
+  const addInfoLog = async info => {
+
+    let file1 ={
+      name:new Date() + '_idcardfront',
+      uri:info.IdCardFront.path,
+      type:info.IdCardFront.mime,
+      size: info.IdCardFront.size,
+      lastModified: info.IdCardFront.modificationDate,
+    }
+
+    let file2 = {
+      name:new Date() + '_idcardback',
+      uri:info.IdCardBack.path,
+      type:info.IdCardBack.mime,
+      size: info.IdCardBack.size,
+      lastModified: info.IdCardBack.modificationDate,
+    }
+
+    let file3 ={
+      name:new Date() + '_idpassport',
+      uri:info.Passport1.path,
+      type:info.Passport1.mime,
+      size: info.Passport1.size,
+      lastModified: info.Passport1.modificationDate,
+    }
+    const err1 = checkImage(file1)
+    const err2 = checkImage(file2)
+    const err3 = checkImage(file3)
+    if (err1) {
+      return Alert.alert('Error', err1);
+
+    }
+    if (err2) {
+      return Alert.alert('Error', err2);
+    }
+    if (err3) {
+      return Alert.alert('Error', err3);
+    }
+
+    const images = await imageUpload([file1, file2, file3]);
+
+  }
+
 
   const addInfo = async info => {
     const config = {
@@ -126,27 +170,66 @@ const SignInScreen = () => {
 
     try {
       setLoading2(true)
-      const formData = new FormData();
-      formData.append('id', userId);
-      formData.append('firstName', info.FirstName);
-      formData.append('lastName', info.LastName);
-      formData.append('dateOfBirth', info.DateOfBirth);
-      formData.append('placeOfBirth', info.PlaceOfBirth);
-      formData.append('motherName', info.MotherName);
-      formData.append('phoneNumber', info.PhoneNumber);
-      formData.append('idCardNumber', info.IdCardNumber);
-      formData.append('region', info.Region);
-      formData.append('residence', info.Residence);
-      formData.append('files', info.IdCardFront);
-      formData.append('files', info.IdCardBack);
-      formData.append('files', info.Passport1);
+      let file1 ={
+        name:new Date() + '_idcardfront',
+        uri:info.IdCardFront.path,
+        type:info.IdCardFront.mime,
+        size: info.IdCardFront.size,
+        lastModified: info.IdCardFront.modificationDate,
+      }
+
+      let file2 = {
+        name:new Date() + '_idcardback',
+        uri:info.IdCardBack.path,
+        type:info.IdCardBack.mime,
+        size: info.IdCardBack.size,
+        lastModified: info.IdCardBack.modificationDate,
+      }
+
+      let file3 ={
+        name:new Date() + '_idpassport',
+        uri:info.Passport1.path,
+        type:info.Passport1.mime,
+        size: info.Passport1.size,
+        lastModified: info.Passport1.modificationDate,
+      }
+      const err1 = checkImage(file1)
+      const err2 = checkImage(file2)
+      const err3 = checkImage(file3)
+      if (err1) {
+        return Alert.alert('Error', err1);
+
+      }
+      if (err2) {
+        return Alert.alert('Error', err2);
+      }
+      if (err3) {
+        return Alert.alert('Error', err3);
+      }
+
+      const images = await imageUpload([file1, file2, file3]);
+
+      let data={
+        UserId: userId,
+        FirstName: info.FirstName,
+        LastName: info.LastName,
+        DateOfBirth: info.DateOfBirth,
+        PlaceOfBirth: info.PlaceOfBirth,
+        MotherName: info.MotherName,
+        PhoneNumber: info.PhoneNumber,
+        IdCardNumber: info.IdCardNumber,
+        Region: info.Region,
+        Residence: info.Residence,
+        Images: images,
+      }
+
 
       const res = await axios.post(
-        'https://digital-experts.herokuapp.com/api/fileupload/multipleFiles',
-        formData,
+        'https://digital-experts.herokuapp.com/api/private/createnewprodject',
+        data,
         config,
       );
-      console.log(res);
+      console.log("sucessfull upload", res);
       setLoading2(false)
     } catch (error) {
       setLoading2(false)

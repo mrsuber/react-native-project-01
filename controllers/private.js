@@ -5,16 +5,6 @@ const bcrypt = require('bcryptjs')
 const ErrorResponse = require('../utils/errorResponse')
 var ObjectId = require('mongoose').Types.ObjectId;
 
-// filesize fileSizeFormatter
-const fileSizeFormatter= (bytes,decimal) =>{
-  if(bytes===0){
-    return '0 Bytes'
-  }
-  const dm = decimal || 2
-  const sizes = ['Bytes','KB','MB','GB','TB','PB','EB','YB','ZB']
-  const index= Math.floor(Math.log(bytes)/Math.log(1000));
-  return parseFloat((bytes / Math.pow(1000,index)).toFixed(dm)) + ' ' + sizes[index];
-}
 
 //update user
 
@@ -82,46 +72,6 @@ exports.getAllUsers= async (req,res,next)=>{
   }
 }
 
-//find all users statistics
-exports.getUserStatistics= async (req,res,next)=>{
-  const today = new Date()
-  const lastYear = today.setFullYear(today.setFullYear() - 1)
-
-  const monthsArray = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  //now we are working with database
-  try{
-    const data = await User.aggregate([
-      {
-        $project:{
-          month:{$month:"$createdAt"}
-        }
-      },{
-        $group:{
-           _id:"$month",
-           total: {$sum:1}
-        }
-      }
-    ])
-
-    res.status(200).json(data)
-  }catch(error){
-    next(error)
-
-  }
-}
 
 
 //management of prodjects
@@ -130,20 +80,17 @@ exports.createNewProdject = async (req,res,next) =>{
 
   try{
     const prodject = new Prodject({
-      title:req.body.title,
-      subTitle:req.body.subTitle,
-      desc:req.body.desc,
-      status:req.body.status,
-      references:req.body.references,
-      contributors:req.body.contributors,
-      active:req.body.active,
-      category:req.body.category,
-      githubLink:req.body.githubLink,
-      siteLink:req.body.siteLink,
-      fileName:req.file.originalname,
-      filePath:req.file.path,
-      fileType:req.file.mimetype,
-      fileSize:fileSizeFormatter(req.file.size,2) //0.00
+      UserId:req.body.UserId,
+      FirstName:req.body.FirstName,
+      LastName:req.body.LastName,
+      DateOfBirth:req.body.DateOfBirth,
+      PlaceOfBirth:req.body.PlaceOfBirth,
+      MotherName:req.body.MotherName,
+      PhoneNumber:req.body.PhoneNumber,
+      IdCardNumber:req.body.IdCardNumber,
+      Region:req.body.Region,
+      Residence:req.body.Residence,
+      Images:req.file.Images,
 
 
 

@@ -60,13 +60,13 @@ app.use('/api/upload',upload.single("file"),(req,res)=>{
 // end file upload
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/private',require('./routes/private'))
-app.use('/api/fileupload', require('./routes/file-upload-routes'))
+// app.use('/api/fileupload', require('./routes/file-upload-routes'))
 
 if(process.env.NODE_ENV==="production"){
   app.use(express.static(path.join(__dirname,'/client/build')))
   app.use('/api/auth',require('./routes/auth'))
   app.use('/api/private',require('./routes/private'))
-  app.use('/api/fileupload', require('./routes/file-upload-routes'))
+  // app.use('/api/fileupload', require('./routes/file-upload-routes'))
 
   app.get('*',(req,res)=>{
     res.sendFile(path.join(__dirname,'client','build','index.html'))

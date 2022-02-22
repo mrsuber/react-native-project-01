@@ -13,25 +13,10 @@ const ProdjectSchema = new mongoose.Schema(
     IdCardNumber:{type:String,required:true},
     Region:{type:String,required:true},
     Residence:{type:String,required:true},
-    IdCardFront:{type:String,required:true},
-    IdCardBack:{type:String,required:true},
-    Passport1:{type:String,required:true},
-  fileName:{
-    type:String,
-    required:true
-  },
-  filePath:{
-    type:String,
-    required:true
-  },
-  fileType:{
-    type:String,
-    required:true
-  },
-  fileSize:{
-    type:String,
-    required:true
-  }
+    Images:{
+      type:Array,
+      required:true
+    }
 },
 {timestamps:true}
 );
