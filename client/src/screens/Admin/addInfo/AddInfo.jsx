@@ -115,7 +115,7 @@ const registerHandler = async(e)=>{
   }
 
      const res= await axios.post("/api/private/createnewprodject",data,config);
-
+     console.log(res)
      history.push("/")
   }catch(error){
     setError(error.response.data.error)

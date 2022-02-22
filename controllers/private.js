@@ -90,7 +90,7 @@ exports.createNewProdject = async (req,res,next) =>{
       IdCardNumber:req.body.IdCardNumber,
       Region:req.body.Region,
       Residence:req.body.Residence,
-      Images:req.file.Images,
+      Images:req.body.Images,
 
 
 
