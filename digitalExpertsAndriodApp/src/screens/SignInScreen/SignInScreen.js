@@ -210,7 +210,7 @@ const SignInScreen = () => {
       const images = await imageUpload([file1, file2, file3]);
 
       let data={
-        UserId: userId,
+        SubmitedBy: userId,
         FirstName: info.FirstName,
         LastName: info.LastName,
         DateOfBirth: info.DateOfBirth,
@@ -229,11 +229,11 @@ const SignInScreen = () => {
         data,
         config,
       );
-      console.log("sucessfull upload", res);
+      Alert.alert('Success', 'Form uploaded successfully');
       setLoading2(false)
     } catch (error) {
       setLoading2(false)
-      console.log(error)
+
       Alert.alert('Error', 'Upload Error, please try again');
     }
   };
