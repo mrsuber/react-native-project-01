@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const ProdjectSchema = new mongoose.Schema(
   {
-    UserId:{type:String,required:true},
+    SubmitedBy:{type:String,required:true},
     FirstName:{type:String,required:true},
     LastName:{type:String,required:true},
 

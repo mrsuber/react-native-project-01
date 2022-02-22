@@ -79,8 +79,8 @@ exports.getAllUsers= async (req,res,next)=>{
 exports.createNewProdject = async (req,res,next) =>{
 
   try{
-    const prodject = new Prodject({
-      UserId:req.body.UserId,
+    const prodject = await Prodject.create({
+      SubmitedBy:req.body.SubmitedBy,
       FirstName:req.body.FirstName,
       LastName:req.body.LastName,
       DateOfBirth:req.body.DateOfBirth,
@@ -97,8 +97,8 @@ exports.createNewProdject = async (req,res,next) =>{
     });
     // await prodject.save();
     // const newProdject = await Prodject.create(req.body)
-    const saveProdject = await prodject.save()
-    res.status(200).json({success:true, data:saveProdject})
+    // const saveProdject = await prodject.save()
+    res.status(200).json({success:true, data:prodject})
   }catch(error){next(error)}
 
 }

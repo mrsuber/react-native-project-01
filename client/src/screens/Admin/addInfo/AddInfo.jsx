@@ -101,7 +101,7 @@ const registerHandler = async(e)=>{
 
 
   let data={
-    UserId: id,
+    SubmitedBy: id,
     FirstName: firstName,
     LastName: lastName,
     DateOfBirth: dateOfBirth,
@@ -118,10 +118,12 @@ const registerHandler = async(e)=>{
      console.log(res)
      history.push("/")
   }catch(error){
-    setError(error.response.data.error)
-      setTimeout(()=>{
-        setError("")
-      },5000)
+    // setError(error.response.data.error)
+    //   setTimeout(()=>{
+    //     setError("")
+    //   },5000)
+
+    console.log(error)
   }
 
 }
