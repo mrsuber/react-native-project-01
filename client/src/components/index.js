@@ -7,6 +7,7 @@ export {default as RecentUsers} from './mainAdminComponents/recentUsers/RecentUs
 export {default as RecentInfoInput} from './mainAdminComponents/recentInfoInput/RecentInfoInput'
 export {default as Toast} from './toast/Toast'
 export {default as Region} from './mainAdminComponents/region/Region'
+export {default as ViewPopUp} from './mainAdminComponents/viewPopUp/ViewPopUp'
 // export {default as Table} from './mainAdminComponents/table/Table'
 // export {default as Pagination} from './mainAdminComponents/pagination/Pagination'
 // export {default as Posts} from './mainAdminComponents/posts/Posts'

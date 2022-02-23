@@ -1,7 +1,13 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
+import {ViewPopUp} from '../../../components'
+
 const RecentInfoInput = () => {
   const [info, setInfo] = useState([])
+  const [popup, setPopup] = useState(false)
+  const [data, setData] = useState('')
+
   useEffect(()=>{
     const getInfo = async () =>{
       const config = {
@@ -11,7 +17,7 @@ const RecentInfoInput = () => {
 
         }
       }
-      
+
       try{
         const res= await axios.get("/api/private/getallprodject",config);
 
@@ -24,12 +30,17 @@ const RecentInfoInput = () => {
     getInfo()
   },[])
 
+  const userPopup =(item)=>{
+    setPopup(true)
+    setData(item)
+  }
 
   return (
     <div className="admin__recentOrder">
+    {popup?<ViewPopUp setPopup={setPopup} info={data}/>:''}
       <div className="admin__cardHeader">
         <h2>Recent Information</h2>
-        <a href="#" className="admin__btn">View all</a>
+        <Link to="/infos" className="admin__btn">View all</Link>
       </div>
       <table>
 
@@ -49,7 +60,7 @@ const RecentInfoInput = () => {
         <tbody>
         {
           info.slice(0, 10).reverse().map((item,index)=>(
-            <tr key={index}>
+            <tr key={index} onClick={()=>userPopup(item)}>
               <td>{item.FirstName}</td>
               <td>{item.LastName}</td>
               <td>{item.Region}</td>

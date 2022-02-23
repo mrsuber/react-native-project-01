@@ -11,6 +11,61 @@ const InfoScreen = ({history}) => {
   const [info, setInfo] = useState([])
   const [tableData,setTableData]=useState(info)
   const [columsData,setColumsData] = useState(info)
+const [error,setError] =useState("")
+  const [userInfo,setUserInfo]=useState([]);
+
+  const [allUsers, setAllUsers] = useState([])
+
+  useEffect(()=>{
+    if(!localStorage.getItem("authToken")){
+      history.push("/login")
+    }
+
+    const fetchUserInfo = async () =>{
+      const id = localStorage.getItem("someRandomNumber")
+      const config = {
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem("authToken")}`
+        }
+      }
+      try{
+        const {data} = await axios.get(`/api/private/finduser/${id}`,config)
+
+        setUserInfo(data.data)
+
+      }catch(error){
+
+        localStorage.removeItem("authToken")
+        setError("You are not authorized please login")
+      }
+    }
+    const fectchAllUsers = async () =>{
+      const id = localStorage.getItem("someRandomNumber")
+      const config = {
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem("authToken")}`
+        }
+      }
+      try{
+        const {data} = await axios.get(`/api/private/getallusers`,config)
+
+        setAllUsers(data.data)
+
+      }catch(error){
+
+        localStorage.removeItem("authToken")
+        setError("You are not authorized please login")
+      }
+    }
+    if(userInfo.isAdmin===true){
+      fectchAllUsers()
+    }
+
+
+    fetchUserInfo()
+  },[history,userInfo.isAdmin])
 
   useEffect(()=>{
     const getInfo = async () =>{
@@ -31,9 +86,16 @@ const InfoScreen = ({history}) => {
     getInfo()
   },[])
 
+  const [popup, setPopup] = useState(false)
+  const [data, setData] = useState('')
+  const userPopup =(item)=>{
+    setPopup(true)
+    setData(item)
+  }
+
 
   const actions = [
-   { icon: Edit, tooltip: 'Edit', onClick: (event, rowData) => alert('Edit ' + rowData.name + '?')},
+   { icon: Edit, tooltip: 'Edit', onClick: (event, rowData) => alert('Edit ' + rowData.Images + '?')},
    { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => alert('View ' + rowData.name + '?')},
    { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => alert('Delete ' + rowData.name + '?')}
 ]
@@ -58,9 +120,12 @@ let columns = [
     <>
     <Sidebar history={history} />
     <div className="admin__main">
-        <Topbar />
+      {userInfo
+        ?<Topbar avatar={userInfo.profilePic} loading={false}/>
+        :<Topbar avatar={userInfo.profilePic} loading={true}/>
+      }
         <div>
-          <Link className="add__user" to="/addInfo">Add User</Link>
+          <Link className="add__user" to="/addInfo">Add Info</Link>
         </div>
 
           <div className="material__table_container">
