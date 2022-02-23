@@ -11,6 +11,9 @@ import {Link} from 'react-router-dom'
 const UserScreen = ({history}) => {
 
   const [users, setUsers] = useState([])
+  const [error,setError] =useState("")
+  const [userInfo,setUserInfo]=useState([]);
+
   useEffect(()=>{
     const getInfo = async () =>{
       const config = {
@@ -24,9 +27,28 @@ const UserScreen = ({history}) => {
         setUsers(res.data.data)
       }catch(error){}
     }
-
-
     getInfo()
+
+    const fetchUserInfo = async () =>{
+      const id = localStorage.getItem("someRandomNumber")
+      const config = {
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem("authToken")}`
+        }
+      }
+      try{
+        const {data} = await axios.get(`/api/private/finduser/${id}`,config)
+
+        setUserInfo(data.data)
+
+      }catch(error){
+
+        localStorage.removeItem("authToken")
+        setError("You are not authorized please login")
+      }
+    }
+fetchUserInfo()
   },[])
   let columns = [
 
@@ -46,7 +68,10 @@ const UserScreen = ({history}) => {
     <>
     <Sidebar history={history} />
     <div className="admin__main">
-        <Topbar />
+    {userInfo
+      ?<Topbar avatar={userInfo.profilePic} loading={false}/>
+      :<Topbar avatar={userInfo.profilePic} loading={true}/>
+    }
 
             <div>
               <Link className="add__user" to="/register">Add User</Link>

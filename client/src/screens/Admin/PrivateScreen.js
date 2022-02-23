@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import axios from 'axios'
 import img1 from '../../images/me.webp'
-import {Sidebar,Topbar,Card,RecentUsers,RecentInfoInput} from '../../components'
+import {Sidebar,Topbar,Card,RecentUsers,RecentInfoInput,ViewPopUp} from '../../components'
 
 import './PrivateScreen.css'
 
@@ -79,7 +79,7 @@ const PrivateScreen = ({history}) => {
           ?<Topbar avatar={userInfo.profilePic} loading={false}/>
           :<Topbar avatar={userInfo.profilePic} loading={true}/>
         }
-
+        
         <Card
         userCount={userCount}
          infoCount={infoCount}
