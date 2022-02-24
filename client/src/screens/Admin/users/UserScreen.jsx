@@ -69,7 +69,7 @@ fetchUserInfo()
         if(userInfo.isAdmin===false){
           return alert("you are not admin")
         }
-        if (window.confirm("Do you really want to leave?")) {
+        if (window.confirm("Do you really want to delete?")) {
           let id = info._id
           setUsers(prevUsers => {
             return prevUsers.filter(user => user._id !== id)
