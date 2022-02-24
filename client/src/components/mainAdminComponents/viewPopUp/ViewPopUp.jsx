@@ -33,45 +33,93 @@ useEffect(()=>{
     fetchUserInfo()
   }
 },[info])
-console.log(info)
+
 
   return (
     <div className="social2__select_family_card_wrapper">
 
+
           {userInfo && <div className="social2__select_family_card">
-              <h3>Display user info</h3>
-              <h6>Username: {userInfo.username}</h6>
-              <h6>Email: {userInfo.email}</h6>
-              <h6>Admin Status: {userInfo.isAdmin? "True" : "False"}</h6>
-              <div className="profilePic">
-              <h6>User profile photo</h6>
-              <img src={userInfo.profilePic} />
-              </div>
+
+
+          <div className="profile">
+      <figure>
+      <img src={userInfo.profilePic} alt=""/>
+      </figure>
+      <header>
+      <h1>{userInfo.username}
+      <small>{userInfo.email}</small></h1>
+      </header>
+
+
+      <main className="main">
+      <dl>
+      <dt>User Name</dt>
+        <dd>{userInfo.username}</dd>
+      <dt>Email</dt>
+        <dd>{userInfo.email}</dd>
+
+      </dl>
+      </main>
+
+      </div>
               <button className="popup__button" onClick={()=>setPopup(false)}>back</button>
           </div>}
 
           {info && <div className="social2__select_family_card">
-              <h3>Display Information Submited by :{infos.username? infos.username : ''}</h3>
-              <h4>Information Details:</h4>
-              <h6>First Name: {info.FirstName}</h6>
-              <h6>Last Name: {info.LastName}</h6>
-              <h6> Mothers Name: {info.MotherName}</h6>
-              <h6> Phone Number: {info.PhoneNumber}</h6>
-              <h6> Place Of Birth: {info.PlaceOfBirth}</h6>
-              <h6> Region: {info.Region}</h6>
-              <h6>Residence: {info.Residence}</h6>
-              <div className="profilePic">
-              <h6>Front Id Image</h6>
-              <img src={info.Images[0].url}/>
-              </div>
-              <div className="profilePic">
-              <h6>Back Id Image</h6>
-              <img src={info.Images[1].url}/>
-              </div>
-              <div className="profilePic">
-              <h6>Photo</h6>
-              <img src={info.Images[2].url}/>
-              </div>
+
+          <div className="profile">
+      <figure>
+      <img src={infos.profilePic? infos.profilePic : ''} alt=""/>
+      </figure>
+      <header>
+      <h1> Submited by :{infos.username? infos.username : ''}
+      <small>{infos.email? infos.email : ''}</small></h1>
+      </header>
+
+
+      <main className="main">
+      <dl>
+      <dt>Full name</dt>
+        <dd>{info.FirstName}{' '}{info.LastName}</dd>
+        <dt>Mothers name</dt>
+          <dd>{info.MotherName}</dd>
+          <dt>Phone Number</dt>
+            <dd>{info.PhoneNumber}</dd>
+      <dt>Date of birth</dt>
+        <dd>{info.DateOfBirth}</dd>
+        <dt>Place of birth</dt>
+          <dd>{info.PlaceOfBirth}</dd>
+          <dt>Region</dt>
+            <dd>{info.Region}</dd>
+            <dt>Residence</dt>
+              <dd>{info.Residence}</dd>
+              <dt>Front Id Image</dt>
+                <dd>
+
+                <img src={info.Images[0].url} className="id__photo" alt=''/>
+
+                </dd>
+                <dt>Back Id Image</dt>
+                  <dd>
+
+                  <img src={info.Images[1].url} className="id__photo" alt=''/>
+
+                  </dd>
+                  <dt>Photo</dt>
+                    <dd>
+
+                    <img src={info.Images[2].url} className="id__photo" alt=''/>
+
+                    </dd>
+
+      </dl>
+
+      </main>
+
+      </div>
+
+              
               <div className="popup__button_container">
               <button className="popup__button" onClick={()=>setPopup(false)}>back</button>
               </div>

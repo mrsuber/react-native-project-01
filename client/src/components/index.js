@@ -2,6 +2,7 @@
 
 export {default as Card} from './mainAdminComponents/card/Card'
 export {default as Sidebar} from './mainAdminComponents/sidebar/Sidebar'
+export {default as Sidebar1} from './mainAdminComponents/sidebar/Sidebar1'
 export {default as Topbar} from './mainAdminComponents/topbar/Topbar'
 export {default as RecentUsers} from './mainAdminComponents/recentUsers/RecentUsers'
 export {default as RecentInfoInput} from './mainAdminComponents/recentInfoInput/RecentInfoInput'

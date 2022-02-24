@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import axios from 'axios'
 import img1 from '../../images/me.webp'
-import {Sidebar,Topbar,Card,RecentUsers,RecentInfoInput,ViewPopUp} from '../../components'
+import {Sidebar1,Sidebar,Topbar,Card,RecentUsers,RecentInfoInput,ViewPopUp} from '../../components'
 
 import './PrivateScreen.css'
 
@@ -72,14 +72,27 @@ const PrivateScreen = ({history}) => {
   return (
     error? <span className="error-message">{error}</span>
     :
-    <>
+    <> {userInfo.isAdmin===false
+      ?<>
+        <Sidebar1 history={history} />
+
+        <div className="admin__main">
+            {userInfo
+              ?<Topbar avatar={userInfo.profilePic} loading={false}/>
+              :<Topbar avatar={userInfo.profilePic} loading={true}/>
+            }
+            <span className="error-message">You are not admin, your page is still under construction</span>
+          </div>
+      </>
+
+    :  <>
     <Sidebar history={history} />
     <div className="admin__main">
         {userInfo
           ?<Topbar avatar={userInfo.profilePic} loading={false}/>
           :<Topbar avatar={userInfo.profilePic} loading={true}/>
         }
-        
+
         <Card
         userCount={userCount}
          infoCount={infoCount}
@@ -92,8 +105,8 @@ const PrivateScreen = ({history}) => {
 
           </div>
         </div>
-    {/*<div style={{background:"green", color:"white"}}>PrivateData:{privateData}</div>
-    <button onClick={logoutHandler}>Logout</button>*/}
+        </>
+      }
 
     </>
 
