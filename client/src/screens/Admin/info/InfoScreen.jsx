@@ -95,10 +95,30 @@ const [error,setError] =useState("")
     setData(item)
   }
 
+
+
+  const deleteInfo = async (id) =>{
+    setInfo(prevInfo => {
+      return prevInfo.filter(info => info._id !== id)
+    })
+    const config = {
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${localStorage.getItem("authToken")}`
+      }
+    }
+    try{
+      const res= await axios.delete(`/api/private/deleteprodject/${id}`,config);
+
+    }catch(error){
+
+    }
+
+
+  }
   const actions = [
-   { icon: Edit, tooltip: 'Edit', onClick: (event, rowData) => alert('Edit ' + rowData.Images + '?')},
    { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => userPopup(rowData)},
-   { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => alert('Delete ' + rowData.name + '?')}
+   { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => deleteInfo(rowData._id)}
 ]
 
 let columns = [
