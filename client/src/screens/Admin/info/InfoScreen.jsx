@@ -2,7 +2,7 @@ import React from 'react'
 import {useState,useEffect} from 'react'
 import MaterialTable from 'material-table'
 import {title,tableIcons} from '../../../data/data'
-import {Sidebar,Topbar} from '../../../components'
+import {Sidebar,Topbar,ViewPopUp} from '../../../components'
 import {Delete,Edit,ZoomIn} from '@material-ui/icons';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
@@ -15,6 +15,9 @@ const [error,setError] =useState("")
   const [userInfo,setUserInfo]=useState([]);
 
   const [allUsers, setAllUsers] = useState([])
+  const [popup, setPopup] = useState(false)
+  const [data, setData] = useState('')
+
 
   useEffect(()=>{
     if(!localStorage.getItem("authToken")){
@@ -86,17 +89,15 @@ const [error,setError] =useState("")
     getInfo()
   },[])
 
-  const [popup, setPopup] = useState(false)
-  const [data, setData] = useState('')
+
   const userPopup =(item)=>{
     setPopup(true)
     setData(item)
   }
 
-
   const actions = [
    { icon: Edit, tooltip: 'Edit', onClick: (event, rowData) => alert('Edit ' + rowData.Images + '?')},
-   { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => alert('View ' + rowData.name + '?')},
+   { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => userPopup(rowData)},
    { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => alert('Delete ' + rowData.name + '?')}
 ]
 
@@ -120,6 +121,7 @@ let columns = [
     <>
     <Sidebar history={history} />
     <div className="admin__main">
+    {popup?<ViewPopUp setPopup={setPopup} info={data}/>:''}
       {userInfo
         ?<Topbar avatar={userInfo.profilePic} loading={false}/>
         :<Topbar avatar={userInfo.profilePic} loading={true}/>

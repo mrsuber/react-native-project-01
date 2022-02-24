@@ -59,7 +59,7 @@ const RecentInfoInput = () => {
         </thead>
         <tbody>
         {
-          info.slice(0, 10).reverse().map((item,index)=>(
+          info.reverse().slice(0, 10).map((item,index)=>(
             <tr key={index} onClick={()=>userPopup(item)}>
               <td>{item.FirstName}</td>
               <td>{item.LastName}</td>
