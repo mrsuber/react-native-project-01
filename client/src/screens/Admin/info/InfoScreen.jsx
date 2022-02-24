@@ -97,28 +97,36 @@ const [error,setError] =useState("")
 
 
 
-  const deleteInfo = async (id) =>{
-    setInfo(prevInfo => {
-      return prevInfo.filter(info => info._id !== id)
-    })
-    const config = {
-      headers:{
-        "Content-Type":"application/json",
-        Authorization:`Bearer ${localStorage.getItem("authToken")}`
+  const deleteInfo = async (info) =>{
+    if(userInfo.isAdmin===false){
+      return alert("you are not admin")
+    }
+    if (window.confirm("Do you really want to leave?")) {
+      let id = info._id
+      setInfo(prevInfo => {
+        return prevInfo.filter(info => info._id !== id)
+      })
+      const config = {
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem("authToken")}`
+        }
       }
-    }
-    try{
-      const res= await axios.delete(`/api/private/deleteprodject/${id}`,config);
+      try{
+        const res= await axios.delete(`/api/private/deleteprodject/${id}`,config);
 
-    }catch(error){
+      }catch(error){
 
-    }
+      }
+
+}
+
 
 
   }
   const actions = [
    { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => userPopup(rowData)},
-   { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => deleteInfo(rowData._id)}
+   { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => deleteInfo(rowData)}
 ]
 
 let columns = [
