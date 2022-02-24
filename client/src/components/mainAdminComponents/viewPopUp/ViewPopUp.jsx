@@ -51,7 +51,7 @@ console.log(info)
           </div>}
 
           {info && <div className="social2__select_family_card">
-              <h3>Display Information Submited by :{infos.username}</h3>
+              <h3>Display Information Submited by :{infos.username? infos.username : ''}</h3>
               <h4>Information Details:</h4>
               <h6>First Name: {info.FirstName}</h6>
               <h6>Last Name: {info.LastName}</h6>

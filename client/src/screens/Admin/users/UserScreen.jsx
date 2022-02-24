@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import MaterialTable from 'material-table'
 import {title,tableIcons} from '../../../data/data'
-import {Sidebar,Topbar} from '../../../components'
+import {Sidebar,Topbar,ViewPopUp} from '../../../components'
 import {Delete,Edit,ZoomIn} from '@material-ui/icons';
 import {Link} from 'react-router-dom'
 
@@ -13,6 +13,9 @@ const UserScreen = ({history}) => {
   const [users, setUsers] = useState([])
   const [error,setError] =useState("")
   const [userInfo,setUserInfo]=useState([]);
+  const [popup, setPopup] = useState(false)
+  const [data, setData] = useState('')
+
 
   useEffect(()=>{
     const getInfo = async () =>{
@@ -57,10 +60,13 @@ fetchUserInfo()
 
 
       ]
-  console.log(users)
+      const userPopup =(item)=>{
+        setPopup(true)
+        setData(item)
+      }
   const actions = [
    { icon: Edit, tooltip: 'Edit', onClick: (event, rowData) => alert('Edit ' + rowData.name + '?')},
-   { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => alert('View ' + rowData.name + '?')},
+   { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => userPopup(rowData)},
    { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => alert('Delete ' + rowData.name + '?')}
 ]
   return (
@@ -68,6 +74,7 @@ fetchUserInfo()
     <>
     <Sidebar history={history} />
     <div className="admin__main">
+    {popup?<ViewPopUp setPopup={setPopup} userInfo={data}/>:''}
     {userInfo
       ?<Topbar avatar={userInfo.profilePic} loading={false}/>
       :<Topbar avatar={userInfo.profilePic} loading={true}/>
