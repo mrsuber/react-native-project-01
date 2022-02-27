@@ -1,7 +1,8 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useRef} from 'react'
 import './ViewPopUp.css'
 import axios from 'axios'
 
+import {useReactToPrint} from 'react-to-print';
 
 
 
@@ -34,9 +35,26 @@ useEffect(()=>{
   }
 },[info])
 
+const componentRef = useRef();
+const handlePrint = useReactToPrint({
+  content: ()=>componentRef.current,
+})
+
+const print = (id) =>{
+
+
+    let restorepage = document.body.innerHTML;
+    let printcontent = document.getElementById(id)
+    // document.body.innerHTML = printcontent;
+    // window.print();
+    // document.body.innerHTML=restorepage
+
+
+}
+
 
   return (
-    <div className="social2__select_family_card_wrapper">
+    <div className="social2__select_family_card_wrapper" >
 
 
           {userInfo && <div className="social2__select_family_card">
@@ -68,7 +86,7 @@ useEffect(()=>{
 
           {info && <div className="social2__select_family_card">
 
-          <div className="profile">
+          <div className="profile" id="print-section" ref={componentRef}>
       <figure>
       <img src={infos.profilePic? infos.profilePic : ''} alt=""/>
       </figure>
@@ -94,19 +112,20 @@ useEffect(()=>{
             <dd>{info.Region}</dd>
             <dt>Residence</dt>
               <dd>{info.Residence}</dd>
-              <dt>Front Id Image</dt>
+              <hr  className="id_photo_title1" />
+              <dt className="id_photo_title ">Front Id Image</dt>
                 <dd>
 
                 <img src={info.Images[0].url} className="id__photo" alt=''/>
 
                 </dd>
-                <dt>Back Id Image</dt>
+                <dt  className="id_photo_title">Back Id Image</dt>
                   <dd>
 
                   <img src={info.Images[1].url} className="id__photo" alt=''/>
 
                   </dd>
-                  <dt>Photo</dt>
+                  <dt  className="id_photo_title">Photo</dt>
                     <dd>
 
                     <img src={info.Images[2].url} className="id__photo" alt=''/>
@@ -119,9 +138,10 @@ useEffect(()=>{
 
       </div>
 
-              
+
               <div className="popup__button_container">
               <button className="popup__button" onClick={()=>setPopup(false)}>back</button>
+              <button className="popup__button" onClick={handlePrint}>print</button>
               </div>
           </div>}
 
