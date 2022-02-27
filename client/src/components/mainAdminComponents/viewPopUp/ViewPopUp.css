@@ -72,18 +72,28 @@
 }
 
 .profile figure img {
-    max-width: 150px;
-    max-height: 150px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     padding: 10px;
     box-shadow: 0px 0px 20px rgb(21 21 21 / 15%);
 }
 .id__photo{
-  max-width: 300px;
-  max-height: 300px;
+  width: 200px;
+  height: 200px;
   /* border-radius: 50%; */
   padding: 10px;
   box-shadow: 0px 0px 20px rgb(21 21 21 / 15%);
+}
+.id_photo_title1{
+
+  margin-bottom: 20px;
+}
+
+.id_photo_title{
+
+  height: 225px;
+  padding: 40px 0 !important;
 }
 .profile header h1 {
     margin: 0;
