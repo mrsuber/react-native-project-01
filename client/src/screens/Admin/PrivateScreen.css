@@ -16,9 +16,10 @@
 }
 .add__user{
   text-decoration: none;
-  padding: 5px 15px;
-    background: #03a9f4;
-    color: #fff;
+  padding: 15px 15px;
+
+    background: rgb(1 1 1);
+    color: #f1962f;
     text-decoration: none;
     border-radius: 6px;
     margin: 20px;
@@ -105,8 +106,8 @@
 .admin__btn{
   position: relative;
   padding: 5px 10px;
-  background: #03a9f4;
-  color: #fff;
+  background: rgb(1 1 1);
+  color:#f1962f;
   text-decoration: none;
   border-radius: 6px;
 }
@@ -128,8 +129,8 @@
   border-bottom: none;
 }
 .admin__details .admin__recentOrder table tbody tr:hover{
-  background: #03a9f4;
-  color: #fff;
+  background: rgb(1 1 1);
+  color: #f1962f;
 }
 
 .admin__details .admin__recentOrder table tr td{
@@ -213,8 +214,8 @@
 .admin__details .admin__recentCustomers table tr:hover,
 .admin__details .admin__recentCustomers table tr:hover td h4 span
 {
-background: #03a9f4;
-color:#fff;
+background: rgb(1 1 1);
+color:#f1962f;
 
 }
 .admin__details .admin__recentCustomers table tr td{

@@ -39,7 +39,7 @@
 }
 
 .admin__navigation ul li:hover{
-  background: #1e496b;
+  background:rgb(238 116 17 / 18%);
 }
 
 .admin__navigation ul li:nth-child(1):hover{

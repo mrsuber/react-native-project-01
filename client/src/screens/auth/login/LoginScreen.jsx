@@ -2,12 +2,15 @@ import './LoginScreen.css'
 import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-
+import {Toast} from '../../../components'
+import logo from '../../../images/mainlogo.jpeg'
 const LoginScreen = ({history}) => {
 
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
   const [error,setError]=useState('')
+  const [popupErrors, setPopupErrors]=([])
+  const [show,setShow]=useState(false)
 
   useEffect(()=>{
     if(localStorage.getItem("authToken")){
@@ -32,24 +35,36 @@ const LoginScreen = ({history}) => {
        localStorage.setItem("someName", data.username)
        history.push("/")
     }catch(error){
-      setError(error.response.data.error)
-        setTimeout(()=>{
-          setError("")
-        },5000)
+      // setPopupErrors(error.response.data)
+      setShow(true)
+      setError(error.response.data)
+
+
     }
   }
 
+let msg = {
+  title:"Error",
+  body: error.msg
+}
 
+const handleShow =()=>{
+  setShow(false)
+}
 
   return (
     <>
     <div className="login-container">
+     { show ? <Toast msg={msg} bgColor="social2-toast-red" handleShow={handleShow}/> : ''}
     <div className="align " id="login2">
 
-        <div class="login-box">
+        <div className="login-box">
+        <div className="login_title_container">
+        <span className="login__icon"><img src={logo} alt="digital experts" className="logo"/></span>
+        <span className="login__title"><h2>Login</h2></span>
 
-          <h2>Login</h2>
-          {error && <span className="error-message">{error}</span>}
+        </div>
+
 
           <form onSubmit={loginHandler} >
             <div class="user-box">

@@ -24,12 +24,16 @@ exports.register= async (req,res,next)=>{
 exports.login= async (req,res,next)=>{
   const {email,password} = req.body;
   if(!email || !password){
+    res.status(400).json({success:true, msg:'please provide an email and password'})
+
     return next(new ErrorResponse("please provide an email and password", 400))
   }
 
   try{
     const user = await User.findOne({email}).select("+password")
     if(!user){
+      res.status(400).json({success:true, msg:'Invalid credentials'})
+
       return next(new ErrorResponse("Invalid credentials",401))
 
     }
@@ -37,6 +41,8 @@ exports.login= async (req,res,next)=>{
     const isMatch = await user.matchPasswords(password)
 
     if(!isMatch){
+      res.status(400).json({success:true, msg:'Invalid Login credentials'})
+
       return next(new ErrorResponse("Invalid Login credentials",401))
 
     }
@@ -44,6 +50,7 @@ exports.login= async (req,res,next)=>{
 
     sendToken(user, 200,res)
   }catch(error){
+    res.status(400).json({success:true, msg:error})
 
   }
 }
