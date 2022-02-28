@@ -3,11 +3,13 @@ import {useState,useEffect} from 'react'
 import MaterialTable from 'material-table'
 import {title,tableIcons} from '../../../data/data'
 import {Sidebar,Topbar,ViewPopUp} from '../../../components'
-import {Delete,Edit,ZoomIn,CloudDownload} from '@material-ui/icons';
+import {Delete,Edit,ZoomIn,CloudDownload,PrintOutlined} from '@material-ui/icons';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 // import XLSX from 'xlsx'
 import * as XLSX from 'xlsx/xlsx.mjs';
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 
 const InfoScreen = ({history}) => {
@@ -130,7 +132,8 @@ const [error,setError] =useState("")
   const actions = [
    { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => userPopup(rowData)},
    { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => deleteInfo(rowData)},
-   { icon: CloudDownload, tooltip: 'Export to excel',isFreeAction: true, onClick: () => downloadExcel("clicked")}
+   { icon: CloudDownload, tooltip: 'Export to excel',isFreeAction: true, onClick: () => downloadExcel("clicked")},
+   { icon: PrintOutlined, tooltip: 'Export to PDF',isFreeAction: true, onClick: () => downloadPDF("clicked")}
 ]
 
 let columns = [
@@ -147,7 +150,7 @@ let columns = [
       {title:"Residence",field:"Residence"}
 
     ]
-    console.log(info)
+
   const downloadExcel = () =>{
     const newData= info.map(row=>{
       delete row.tableData
@@ -169,6 +172,32 @@ let columns = [
     XLSX.write(workbook,{bookType:'xlsx',type:'binary'})
 //download
     XLSX.writeFile(workbook,"IdData.xlsx")
+  }
+  console.log(info)
+  const downloadPDF = ()=>{
+
+    const doc = new jsPDF()
+    doc.text("Information",20,10)
+    doc.autoTable({
+      Theme:'grid',
+
+      // body: info.map(col=>({...col,Images:col.Images[0].url})),
+      body:info,
+   columns: [
+     { header: 'FirstName', dataKey: 'FirstName' },
+     { header: 'LastName', dataKey: 'LastName' },
+     { header: 'DateOfBirth', dataKey: 'DateOfBirth' },
+     { header: 'IdCardNumber', dataKey: 'IdCardNumber' },
+     { header: 'MotherName', dataKey: 'MotherName' },
+     { header: 'PhoneNumber', dataKey: 'PhoneNumber' },
+     { header: 'PlaceOfBirth', dataKey: 'PlaceOfBirth' },
+     { header: 'Region', dataKey: 'Region' },
+     { header: 'Residence', dataKey: 'Residence' },
+     // { header: 'Images', dataKey: 'Images' },
+
+   ],
+    })
+    doc.save("table.pdf")
   }
 
   return (
