@@ -3,9 +3,12 @@ import {useState,useEffect} from 'react'
 import MaterialTable from 'material-table'
 import {title,tableIcons} from '../../../data/data'
 import {Sidebar,Topbar,ViewPopUp} from '../../../components'
-import {Delete,Edit,ZoomIn} from '@material-ui/icons';
+import {Delete,Edit,ZoomIn,CloudDownload} from '@material-ui/icons';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+// import XLSX from 'xlsx'
+import * as XLSX from 'xlsx/xlsx.mjs';
+
 
 const InfoScreen = ({history}) => {
   const [info, setInfo] = useState([])
@@ -126,7 +129,8 @@ const [error,setError] =useState("")
   }
   const actions = [
    { icon: ZoomIn, tooltip: 'View', onClick: (event, rowData) => userPopup(rowData)},
-   { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => deleteInfo(rowData)}
+   { icon: Delete, tooltip: 'Delete', onClick: (event, rowData) => deleteInfo(rowData)},
+   { icon: CloudDownload, tooltip: 'Export to excel',isFreeAction: true, onClick: () => downloadExcel("clicked")}
 ]
 
 let columns = [
@@ -143,7 +147,29 @@ let columns = [
       {title:"Residence",field:"Residence"}
 
     ]
+    console.log(info)
+  const downloadExcel = () =>{
+    const newData= info.map(row=>{
+      delete row.tableData
+      delete row._id
+      delete row.SubmitedBy
+      delete row.Images
+      delete row.createdAt
+      delete row.updatedAt
+      delete row.__v
+      return row
+    })
+    const worksheet = XLSX.utils.json_to_sheet(newData)
+    const workbook = XLSX.utils.book_new()
 
+    XLSX.utils.book_append_sheet(workbook,worksheet,"Information")
+    //buffer
+    let buffer = XLSX.write(workbook,{bookType:"xlsx", type:"buffer"})
+    //binary string
+    XLSX.write(workbook,{bookType:'xlsx',type:'binary'})
+//download
+    XLSX.writeFile(workbook,"IdData.xlsx")
+  }
 
   return (
     <>
@@ -166,6 +192,9 @@ let columns = [
           data={info}
           title="Information list"
           actions={actions}
+          // options={{
+          //   selection: true
+          // }}
           />
           </div>
 
